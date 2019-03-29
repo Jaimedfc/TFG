@@ -1,0 +1,55 @@
+#items {
+	font-size: x-large;
+	color: red;
+}
+
+appFactory {
+}
+.appFactory-header {
+font-size: x-large;
+color: mediumblue;
+}
+.appFactory-header-title {
+ font-size: x-large;
+ color: darkblue;
+}
+.appFactory-header-version {
+ font-size: x-small;
+ color: lightblue;
+ position: absolute;
+ top: 10px;
+ right: 10px;
+}
+.appFactory-data {
+color: darkgreen;
+border: 1px solid green;
+margin: 10px;
+ padding: 10px;
+}
+.appFactory-data-item {
+ font-size: x-large;
+ color: green;
+ padding: 5px;
+}
+
+.appFactory-data-updating {
+ display: block;
+ font-size: smaller;
+ color: lightgreen;
+}
+.appFactory-data-error {
+ display: block;
+ font-size: smaller;
+ color: red;
+}
+.appFactory-control {
+font-size: small;
+}
+.button-common {
+color: blue;
+}
+.button-common:disabled {
+ color: lightgrey;
+}
+.info-common {
+}
