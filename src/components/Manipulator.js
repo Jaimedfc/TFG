@@ -6,8 +6,16 @@ class Manipulator extends React.Component {
   state = { manipulatorNameKey: null,
             manipulatorLocationNameKey: null,
             manipulatorLocationKey: null,
-            manipulatorInfoKey: null };
+            manipulatorInfoKey: null,
+            deleteContractId:null };
 
+
+    constructor(props) {
+
+        super(props);
+        
+        this.deleteContract = this.deleteContract.bind(this);
+    } 
 
     componentDidMount() {
 
@@ -16,13 +24,16 @@ class Manipulator extends React.Component {
         const { drizzle } = this.props;
 
         const json = require('../contracts/Manipulator.json');
-
+        
+        if (drizzle.contracts[this.props.address] === undefined){
           const contractConfig = {
              contractName: this.props.address,
              web3Contract: new drizzle.web3.eth.Contract(json.abi, this.props.address)
           };
 
           drizzle.addContract(contractConfig, []);
+
+        }
     }
 
 
@@ -73,6 +84,7 @@ class Manipulator extends React.Component {
         }
     }
 
+
     // changeItem = e => {
     //     if(e) e.preventDefault();
     //     const { drizzle, drizzleState } = this.props;
@@ -89,6 +101,18 @@ class Manipulator extends React.Component {
         
         
     // };
+    
+
+    deleteContract(){
+
+      const {drizzle, drizzleState} = this.props;
+      const manipFactory = drizzle.contracts.ManipFactory;
+      const deleteContractId = manipFactory.methods["destroyManipulator"].cacheSend(this.props.address, {
+              from: drizzleState.accounts[0]
+          });
+      this.setState({ deleteContractId });
+      this.props.drizzle.deleteContract(this.props.address);
+    }
 
 
     render() {
@@ -127,6 +151,7 @@ class Manipulator extends React.Component {
                   ({manipulatorLocation.lat},{manipulatorLocation.long})</li>
               <li>Información: {manipulatorInfo}</li>
             </ul>
+            <button onClick={this.deleteContract}>Eliminar Manipulador</button>
 
           </div>
         );
@@ -137,7 +162,3 @@ export default Manipulator;
 
 
 
-// <form onSubmit={this.changeItem.bind(this)}>
-            //     <input type="text" id={"modifContract"+this.props.index} name="newGood" style={{width:"300px"}} ref={(element) => { this.input = element }} placeholder="Cambiar valor del contrato creado" />
-            //     <input type="submit" value="Cambiar valor"/> 
-            // </form>

@@ -20,6 +20,7 @@ contract ItemFactory {
   		if(items[i] == Item(address(0))){
   			items[i] = newItem;
   			pushed = true;
+        break;
   		}
   	}
 

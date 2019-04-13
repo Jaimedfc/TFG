@@ -43,12 +43,11 @@ contract Item {
 
  	function addVisit(address _manipulator, uint _dateIn, uint _dateOut, trspType _trspType) public {
 
- 		if ( owner == msg.sender){
+ 	
 
-
-  			Visit memory visit = Visit(Manipulator(_manipulator), _dateIn, _dateOut, _trspType);
-  			rute.push(visit);
-  		}
+  		Visit memory visit = Visit(Manipulator(_manipulator), _dateIn, _dateOut, _trspType);		
+  		rute.push(visit);
+  		
 
  	}
 

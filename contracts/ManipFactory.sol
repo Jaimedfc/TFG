@@ -20,6 +20,7 @@ contract ManipFactory {
   		if(manipulators[i] == Manipulator(address(0))){
   			manipulators[i] = newManip;
   			pushed = true;
+        break;
   		}
   	}
 

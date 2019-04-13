@@ -1,22 +1,29 @@
 import React from "react";
 
 import ShowManipulators from "./ShowManipulators";
+import ShowItems from "./ShowItems";
 
 class ContractOrch extends React.Component {
-  state = { manipulatorCounterKey:null, createManipulatorId:null};
+  state = { manipulatorCounterKey:null,
+            createManipulatorId:null,
+            itemCounterKey:null};
 
 
 
 
   componentDidMount() {
     const { drizzle } = this.props;
-    const contract = drizzle.contracts.ManipFactory;
+    const ManipFactory = drizzle.contracts.ManipFactory;
+    const ItemFactory = drizzle.contracts.ItemFactory;
+
     var manipulatorCounterKey;
+    var itemCounterKey;
       
-    manipulatorCounterKey = contract.methods["getManipLength"].cacheCall();
+    manipulatorCounterKey = ManipFactory.methods["getManipLength"].cacheCall();
+    itemCounterKey = ItemFactory.methods["getItemsLength"].cacheCall();
       
 
-    this.setState({ manipulatorCounterKey });
+    this.setState({ manipulatorCounterKey, itemCounterKey });
     console.log(drizzle);
     console.log(this.props.drizzleState);
 
@@ -28,8 +35,8 @@ class ContractOrch extends React.Component {
     const contract = drizzle.contracts.ManipFactory;
     const manipName = String(document.getElementById("manipName").value);
     const manipNameLocation = String(document.getElementById("manipNameLocation").value);
-    const manipLatitude = Number(document.getElementById("manipLatitude").value);
-    const manipLongitude = Number(document.getElementById("manipLongitude").value);
+    const manipLatitude = parseFloat(document.getElementById("manipLatitude").value);
+    const manipLongitude = parseFloat(document.getElementById("manipLongitude").value);
     const manipInfo = String(document.getElementById("manipInfo").value);
 
     const createManipulatorId = contract.methods["createManipulator"].cacheSend(manipName,manipNameLocation,manipLatitude,manipLongitude,manipInfo, {
@@ -46,8 +53,10 @@ class ContractOrch extends React.Component {
   render() {
 
     const { drizzleState } = this.props;
-    const contract = drizzleState.contracts.ManipFactory;
-    var manipulatorsLength = contract.getManipLength[this.state.manipulatorCounterKey];
+    const ItemFactory = drizzleState.contracts.ItemFactory;
+
+    var manipulatorsLength = ManipFactory.getManipLength[this.state.manipulatorCounterKey];
+    var itemsLength = ItemFactory.getItemsLength[this.state.itemCounterKey];
     
   
     return (
@@ -66,6 +75,17 @@ class ContractOrch extends React.Component {
 
 
         <ShowManipulators manipLength={(manipulatorsLength && manipulatorsLength.value) || 0} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
+
+        <hr/>
+        
+        <h2>Sección para Manipuladores</h2>
+        <ShowItems drizzle={this.props.drizzle}
+         drizzleState={this.props.drizzleState}
+         isManipulator={true}
+         itemsLength={(itemsLength && itemsLength.value) || 0}
+         manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
+        />
+        
       </div>
     );
   }
