@@ -66,19 +66,22 @@ class ShowRute extends React.Component {
             if (((visit && visit.value) !== undefined)){
                 
           return (<Visit key={index} 
-                manipulator={visit.value.manipulator.address}
+                manipulator={visit.value.manipulator}
                 dateIn={visit.value.dateIn}
                 dateOut={visit.value.dateOut}
-                trsp={visit.value.trsp}
+                trsp={visit.value.trspOut}
                 index={index} 
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
-                manipulators={this.props.manipulators}
-                isManipulator={this.props.isManipulator}/>);
+                isManipulator={this.props.isManipulator}
+                visitsLength={myVisits.length}/>);
             }else return null;
       });
 
-      return (components) ;
+      return (<div>
+        <p>Se ha seguido la siguiente ruta:</p>
+        {components}
+        </div>) ;
       
     }
 };

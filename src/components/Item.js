@@ -18,7 +18,8 @@ class Item extends React.Component {
         
         this.deleteContract = this.deleteContract.bind(this);
         this.showButtons = this.showButtons.bind(this);
-        this.addRuteVisit = this.addRuteVisit.bind(this)
+        this.addRuteVisit = this.addRuteVisit.bind(this);
+        this.showRute = this.showRute.bind(this);
     } 
 
     componentDidMount() {
@@ -106,10 +107,10 @@ class Item extends React.Component {
         return(<div>
             <form onSubmit={this.addRuteVisit}>
               <p><input id={"manipulator"+this.props.index} min={0} max={this.props.manipulators.length} type="number" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Número de manipulador" required/></p>
-              <p><input id={"itemDateIn"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} placeholder="Fecha de entrada" required/></p>
-              <p><input id={"itemDateOut"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} placeholder="Fecha de salida" required/></p>
+              <p>Fecha de Entrada: <input id={"itemDateIn"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
+              <p>Fecha de Salida: <input id={"itemDateOut"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
               <p>Tipo de transpote de salida:</p>
-                <select name="trsp" id={"trsp"+this.props.index}
+                <select name="trsp" id={"trsp"+this.props.index}>
                   <option value="Land"> Tierra </option>
                   <option value="Sea"> Mar </option>
                   <option value="Air"> Aire </option>
@@ -117,7 +118,8 @@ class Item extends React.Component {
               <input type="submit" value="Crear nuevo hito en la ruta"/> 
             </form>
 
-            <button onClick={this.deleteContract}>Eliminar Manipulador</button>
+            <button onClick={this.deleteContract}>Eliminar Item</button>
+            <hr/>
           </div>)
       }
     }
@@ -126,32 +128,49 @@ class Item extends React.Component {
 
         if(e) e.preventDefault();
 
-        const { drizzle } = this.props;
+        const { drizzle, drizzleState } = this.props;
         const instance = drizzle.contracts[this.props.address];
 
         if (!instance) return null;
 
-        const visitKey = [... this.state.visitKey];
-        const visitKeyItem;
+        const addVisitKey = [... this.state.addVisitKey];
+        let visitKeyItem;
 
-        const manip = Number(document.getElementById("manipulator"+this.props.index).value);
+        const manip = (Number(document.getElementById("manipulator"+this.props.index).value))-1;
         const dateIn = document.getElementById("itemDateIn"+this.props.index).value;
         const dateOut = document.getElementById("itemDateOut"+this.props.index).value;
         const trsp = String(document.getElementById("trsp"+this.props.index).value);
 
-        const manipAddress = this.props.manipulators[manip];
-        const reference = new Date(2019,1,1);
-        const daysDateIn = (dateIn - reference)/(1000*60*60*24);       //days since 1st January 2019
-        const daysDateOut = (dateOut - reference)/(1000*60*60*24);       //days since 1st January 2019
-
+        const manipAddress = this.props.manipulators[manip].value;
+        let reference = new Date(2019,1,1);
+        reference = reference.getTime();
+        let daysDateIn = new Date(dateIn);
+        daysDateIn = (daysDateIn.getTime() - reference)/(1000*60*60*24);       //days since 1st January 2019
+        let daysDateOut = new Date(dateOut);
+        daysDateOut = (daysDateOut.getTime() - reference)/(1000*60*60*24);       //days since 1st January 2019
+    
         visitKeyItem = instance.methods["addVisit"].cacheSend(manipAddress,daysDateIn,daysDateOut,trsp, {
-              from: drizzleState.accounts[0]
+              from: drizzleState.accounts[0], gas: 4712388,
+        gasPrice: 100000000000
           });
-        visitKey.push(visitKeyItem);
-        this.setState({visitKey});
+        addVisitKey.push(visitKeyItem);
+        this.setState({addVisitKey});
 
 
 
+    }
+
+    showRute(ruteLength){
+
+      if (ruteLength > 0){
+
+
+        return (<ShowRute address={this.props.address}
+                drizzle={this.props.drizzle} 
+                drizzleState={this.props.drizzleState}
+                manipulators={this.props.manipulators}
+                ruteLength={ruteLength}/>);
+      }else return null;
     }
 
 
@@ -161,7 +180,8 @@ class Item extends React.Component {
       let itemType = "Waiting";
       let ruteLength = "Waiting";
       let expirationDate = "Waiting";
-      const reference = new Date(2019,1,1);
+      let reference = new Date(2019,1,1);
+      reference = reference.getTime();
 
 
       const instance = this.props.drizzleState.contracts[this.props.address];
@@ -174,9 +194,9 @@ class Item extends React.Component {
           itemType = instance.itType[this.state.itemTypeKey];
           itemType = (itemType && itemType.value) || "??";
 
-          if (itemType === Animal){
+          if (itemType === "Animal"){
             itemType = "Animal";
-          } else if(itemType === Greens){
+          } else if(itemType === "Greens"){
             itemType = "Vegetal";
           }else{
             itemType = "Otros";
@@ -189,6 +209,7 @@ class Item extends React.Component {
           expirationDateDays = (expirationDateDays && expirationDateDays.value) || "??";
 
           expirationDate = reference + (expirationDateDays*1000*60*60*24);
+          expirationDate = new Date(expirationDate);
 
 
 
@@ -201,14 +222,10 @@ class Item extends React.Component {
             <ul>
               <li>Su nombre es: {itemName}</li>
               <li>Es un item de tipo: {itemType}</li>
-              <li>A seguido la siguiente ruta:</li>
-              <li><ShowRute address={this.props.address}
-                drizzle={this.props.drizzle} 
-                drizzleState={this.props.drizzleState}
-                manipulators={manipulators}
-                ruteLength={ruteLength}/></li>
+              <li>Caduca el dia <input value={expirationDate.getDay()} readOnly/> del mes <input value={expirationDate.getMonth()} readOnly/> del año <input value={expirationDate.getFullYear()} readOnly/></li>
             </ul>
-            <p>{showButtons()}</p>
+            {this.showRute(ruteLength)}
+            {this.showButtons()}
 
           </div>
         );

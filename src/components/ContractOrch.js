@@ -54,6 +54,7 @@ class ContractOrch extends React.Component {
 
     const { drizzleState } = this.props;
     const ItemFactory = drizzleState.contracts.ItemFactory;
+    const ManipFactory = drizzleState.contracts.ManipFactory;
 
     var manipulatorsLength = ManipFactory.getManipLength[this.state.manipulatorCounterKey];
     var itemsLength = ItemFactory.getItemsLength[this.state.itemCounterKey];

@@ -22,9 +22,9 @@ contract Item {
 	address payable owner;
 	
 
-	constructor(string memory _name, itemType _itType, int _expirationDate) public {
+	constructor(string memory _name, itemType _itemType, int _expirationDate) public {
 		name = _name;
-		itType = _itType;
+		itType = _itemType;
 		expirationDate = _expirationDate;
 		owner = msg.sender;
 		
@@ -43,8 +43,7 @@ contract Item {
 
  	function addVisit(address _manipulator, uint _dateIn, uint _dateOut, trspType _trspType) public {
 
- 	
-
+ 		
   		Visit memory visit = Visit(Manipulator(_manipulator), _dateIn, _dateOut, _trspType);		
   		rute.push(visit);
   		

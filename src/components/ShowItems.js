@@ -6,7 +6,16 @@ class ShowItems extends React.Component {
 
 
 	state = {   manipulatorsKey: [],
-                itemsKey: [] };
+                itemsKey: [],
+                createItemId:null };
+
+
+    constructor(props) {
+
+        super(props);
+        
+        this.createItem = this.createItem.bind(this);
+    } 
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		
@@ -43,6 +52,29 @@ class ShowItems extends React.Component {
     	
     
 	}
+
+    createItem = e => {
+    if(e) e.preventDefault();
+    const { drizzle, drizzleState } = this.props;
+    let referenceDate = new Date(2019,1,1);
+    referenceDate = referenceDate.getTime();
+    const contract = drizzle.contracts.ItemFactory;
+    const itemName = String(document.getElementById("itemName").value);
+    const itemType = String(document.getElementById("itemType").value);
+    let itemExpirationDate = new Date(document.getElementById("itemExpirationDate").value);
+    itemExpirationDate = (itemExpirationDate.getTime() - referenceDate)/(1000*3600*24); //Days
+
+   
+    const createItemId = contract.methods["createItem"].cacheSend(itemName,itemType,itemExpirationDate, {
+      from: drizzleState.accounts[0], gas: 4712388,
+        gasPrice: 100000000000
+    });
+
+  
+    // save the `createConId` for later reference
+    this.setState({ createItemId});
+     
+   };
 
     
 
@@ -82,7 +114,22 @@ class ShowItems extends React.Component {
             }else return null;
     	});
 
-    	return (components) ;
+    	return (<div>
+            {components}
+
+            <form onSubmit={this.createItem}>
+              <h3>Crear nuevo producto</h3>
+              <p><input id={"itemName"} type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del producto" required/></p>
+              <p>Fecha de Caducidad: <input id={"itemExpirationDate"} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
+              <p>Tipo de producto:</p>
+                <select name="itemType" id="itemType">
+                  <option value="Animal"> Animal </option>
+                  <option value="Greens"> Vegetal </option>
+                  <option value="Other"> Otro </option>
+                </select>
+              <input type="submit" value="Crear nuevo Item"/> 
+            </form>
+            </div>) ;
     	
 		}
 }
