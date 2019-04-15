@@ -62,15 +62,15 @@ class ContractOrch extends React.Component {
   
     return (
       <div>
-        <h2>Sección para Admins</h2>
+        <h1>Sección para Admins</h1>
         <h3>Se han creado {(manipulatorsLength && manipulatorsLength.value) || 0} manipuladores.</h3>
 
         <form onSubmit={this.createManipulator.bind(this)}>
             <p><input id="manipName" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del manipulador" required/></p>
-            <p><input id="manipNameLocation" type="text" style={{width:"200"}} ref={(element) => { this.input = element }} placeholder="Nombre de la localización" required/></p>
-            <p><input id="manipLatitude" type="text" style={{width:"200"}} ref={(element) => { this.input = element }} placeholder="Latitud" required/></p>
-            <p><input id="manipLongitude" type="text" style={{width:"200"}} ref={(element) => { this.input = element }} placeholder="Longitud" required/></p>
-            <p><textarea id="manipInfo" type="text" style={{width:"200"}} ref={(element) => { this.input = element }} placeholder="Información del manipulador" required></textarea></p>
+            <p><input id="manipNameLocation" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre de la localización" required/></p>
+            <p><input id="manipLatitude" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Latitud" required/></p>
+            <p><input id="manipLongitude" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Longitud" required/></p>
+            <p><textarea id="manipInfo" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Información del manipulador" required></textarea></p>
             <input type="submit" value="Crear nuevo manipulador"/> 
         </form>
 
@@ -79,10 +79,21 @@ class ContractOrch extends React.Component {
 
         <hr/>
         
-        <h2>Sección para Manipuladores</h2>
+        <h1>Sección para Manipuladores</h1>
         <ShowItems drizzle={this.props.drizzle}
          drizzleState={this.props.drizzleState}
          isManipulator={true}
+         itemsLength={(itemsLength && itemsLength.value) || 0}
+         manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
+        />
+
+
+        <hr/>
+
+        <h1>Sección para clientes</h1>
+        <ShowItems drizzle={this.props.drizzle}
+         drizzleState={this.props.drizzleState}
+         isManipulator={false}
          itemsLength={(itemsLength && itemsLength.value) || 0}
          manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
         />

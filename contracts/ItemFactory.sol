@@ -9,7 +9,7 @@ contract ItemFactory {
  
   //********************CONSTRUCTOR************
 
-  function createItem(string memory _name, Item.itemType _itemType, int _expirationDate) public{
+  function createItem(string memory _name, uint _itemType, int _expirationDate) public{
 
   	Item newItem = new Item(_name, _itemType, _expirationDate);
   	

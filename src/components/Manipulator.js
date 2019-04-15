@@ -144,7 +144,7 @@ class Manipulator extends React.Component {
         return (
           <div>
 
-            <h1>{"Manipulador número "+(this.props.index + 1)+": "+this.props.address}</h1>
+            <h2>{"Manipulador número "+(this.props.index + 1)+": "+this.props.address}</h2>
             <ul>
               <li>Su nombre es: {manipulatorName}</li>
               <li>Su localización es: {manipulatorLocationName} 

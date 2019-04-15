@@ -26,23 +26,32 @@ class Visit extends React.Component {
 
     showVisit(manipulatorAddress, dateIn, dateOut, trsp){
 
+      let _trsp;
+      if (Number(trsp) === 0){
+            _trsp = "Tierra";
+          } else if(Number(trsp) === 1){
+            _trsp = "Mar";
+          }else{
+            _trsp = "Aire";
+          }
+
       if(this.props.index === 0){
         return(<div>
-              <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200"}} readOnly/>
-              <p>Su fecha de nacimiento/plantación es:</p> <input value={dateIn} style={{width:"200"}} readOnly/>
-              <p>"Su fecha de salida es:"+ <span><input value={"El día "+dateOut.getDay()+ " del mes "+ dateOut.getMonth()+" del año "+dateOut.getFullYear()} style={{width:"200"}} readOnly/></span> + " por " + <span><input value={trsp} style={{width:"200"}} readOnly/></span></p>
+              <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200px"}} readOnly/>
+              <p>Su fecha de nacimiento/plantación es:</p> <input value={"El día "+dateOut.day+ " del mes "+ dateOut.month+" del año "+dateOut.year} style={{width:"400px"}} readOnly/>
+              <p>Su fecha de salida es: <span><input value={"El día "+dateOut.day+ " del mes "+ dateOut.month+" del año "+dateOut.year} style={{width:"400px"}} readOnly/></span>   por   <span><input value={_trsp} style={{width:"200"}} readOnly/></span></p>
             </div>);
       }else if(this.props.index === (this.props.visitsLength-1)){
         return(<div>
-              <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200"}} readOnly/>
-              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.getDay()+ " del mes "+ dateIn.getMonth()+" del año "+dateIn.getFullYear()} style={{width:"200"}} readOnly/>
+              <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200px"}} readOnly/>
+              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.day+ " del mes "+ dateIn.month+" del año "+dateIn.year} style={{width:"400px"}} readOnly/>
             <hr/>
             </div>);
       }else{
         return(<div>
-              <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200"}} readOnly/>
-              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.getDay()+ " del mes "+ dateIn.getMonth()+" del año "+dateIn.getFullYear()} style={{width:"200"}} readOnly/>
-              <p>"Su fecha de salida es:"+ <span><input value={"El día "+dateOut.getDay()+ " del mes "+ dateOut.getMonth()+" del año "+dateOut.getFullYear()} style={{width:"200"}} readOnly/></span> + " por " + <span><input value={trsp} style={{width:"200"}} readOnly/></span></p>
+              <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200px"}} readOnly/>
+              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.day+ " del mes "+ dateIn.month+" del año "+dateIn.year} style={{width:"400px"}} readOnly/>
+              <p>Su fecha de salida es: <span><input value={"El día "+dateOut.day+ " del mes "+ dateOut.month+" del año "+dateOut.year} style={{width:"200px"}} readOnly/></span>  por  <span><input value={_trsp} style={{width:"200"}} readOnly/></span></p>
             </div>);
       }
     }
@@ -55,13 +64,6 @@ class Visit extends React.Component {
       let dateIn = this.props.dateIn;
       let dateOut = this.props.dateOut;
       let trsp = this.props.trsp;
-
-      let reference = new Date(2019,1,1);
-      reference = reference.getTime();
-      dateIn = reference + (dateIn*1000*60*60*24);
-      dateIn = new Date(dateIn);
-      dateOut = reference + (dateOut*1000*60*60*24);
-      dateOut = new Date(dateOut);
 
 
         return (

@@ -41,12 +41,12 @@ class ShowItems extends React.Component {
                 manipulatorsKey[i] = ManipFactory.methods["manipulators"].cacheCall(i);
             }
 
-            for (var i=0; i<l4; i++){
+            for (var j=0; j<l4; j++){
 
-                if (itemsKey[i]) continue;
+                if (itemsKey[j]) continue;
 
                 changed = true;
-                itemsKey[i] = ItemFactory.methods["items"].cacheCall(i);
+                itemsKey[j] = ItemFactory.methods["items"].cacheCall(j);
             }
             changed && this.setState({ manipulatorsKey, itemsKey });
     	
@@ -56,16 +56,17 @@ class ShowItems extends React.Component {
     createItem = e => {
     if(e) e.preventDefault();
     const { drizzle, drizzleState } = this.props;
-    let referenceDate = new Date(2019,1,1);
-    referenceDate = referenceDate.getTime();
+    
     const contract = drizzle.contracts.ItemFactory;
     const itemName = String(document.getElementById("itemName").value);
-    const itemType = String(document.getElementById("itemType").value);
-    let itemExpirationDate = new Date(document.getElementById("itemExpirationDate").value);
-    itemExpirationDate = (itemExpirationDate.getTime() - referenceDate)/(1000*3600*24); //Days
+    const itemType = Number(document.getElementById("itemType").value);
+    let itemExpirationDate = document.getElementById("itemExpirationDate").value;
+    const itemExpirationDateDay = Number(itemExpirationDate.getDay());
+    const itemExpirationDateMonth = Number(itemExpirationDate.getMonth());
+    const itemExpirationDateYear = Number(itemExpirationDate.getFullYear());
 
    
-    const createItemId = contract.methods["createItem"].cacheSend(itemName,itemType,itemExpirationDate, {
+    const createItemId = contract.methods["createItem"].cacheSend(itemName,itemType,itemExpirationDateDay,itemExpirationDateMonth,itemExpirationDateYear, {
       from: drizzleState.accounts[0], gas: 4712388,
         gasPrice: 100000000000
     });
@@ -102,7 +103,7 @@ class ShowItems extends React.Component {
         }
    
     	var components = myItems.map((item, index) => {
-            if (((item && item.value) !== undefined) && item.value != 0x0000000000000000000000000000000000000000){
+            if (((item && item.value) !== undefined) && item.value !== 0x0000000000000000000000000000000000000000){
                 
     		  return (<Item key={index} 
                 address={item.value}
@@ -114,24 +115,30 @@ class ShowItems extends React.Component {
             }else return null;
     	});
 
-    	return (<div>
-            {components}
+        if (!this.props.isManipulator){
+            return components; 
+        }else{
 
-            <form onSubmit={this.createItem}>
-              <h3>Crear nuevo producto</h3>
-              <p><input id={"itemName"} type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del producto" required/></p>
-              <p>Fecha de Caducidad: <input id={"itemExpirationDate"} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
-              <p>Tipo de producto:</p>
-                <select name="itemType" id="itemType">
-                  <option value="Animal"> Animal </option>
-                  <option value="Greens"> Vegetal </option>
-                  <option value="Other"> Otro </option>
-                </select>
-              <input type="submit" value="Crear nuevo Item"/> 
-            </form>
-            </div>) ;
-    	
+
+        	return (<div>
+                {components}
+
+                <form onSubmit={this.createItem}>
+                  <h3>Crear nuevo producto</h3>
+                  <p><input id={"itemName"} type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del producto" required/></p>
+                  <p>Fecha de Caducidad: <input id={"itemExpirationDate"} type="date" style={{width:"200px"}} ref={(element) => { this.input = element }} required/></p>
+                  <p>Tipo de producto:</p>
+                    <select name="itemType" id="itemType">
+                      <option value={1}> Animal </option>
+                      <option value={2}> Vegetal </option>
+                      <option value={3}> Otro </option>
+                    </select>
+                  <input type="submit" value="Crear nuevo Item"/> 
+                </form>
+                </div>) ;
+        	
 		}
+    }
 }
 
 export default ShowItems;
