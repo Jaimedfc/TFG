@@ -15,6 +15,7 @@ class ShowItems extends React.Component {
         super(props);
         
         this.createItem = this.createItem.bind(this);
+        this.parseDate = this.parseDate.bind(this);
     } 
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
@@ -53,6 +54,12 @@ class ShowItems extends React.Component {
     
 	}
 
+    parseDate(input) {
+      var parts = input.match(/(\d+)/g);
+      // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+      return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
+    }
+
     createItem = e => {
     if(e) e.preventDefault();
     const { drizzle, drizzleState } = this.props;
@@ -60,13 +67,12 @@ class ShowItems extends React.Component {
     const contract = drizzle.contracts.ItemFactory;
     const itemName = String(document.getElementById("itemName").value);
     const itemType = Number(document.getElementById("itemType").value);
-    let itemExpirationDate = document.getElementById("itemExpirationDate").value;
-    const itemExpirationDateDay = Number(itemExpirationDate.getDay());
-    const itemExpirationDateMonth = Number(itemExpirationDate.getMonth());
-    const itemExpirationDateYear = Number(itemExpirationDate.getFullYear());
+    let itemExpirationDate = this.parseDate(document.getElementById("itemExpirationDate").value);
+    itemExpirationDate = (itemExpirationDate.getTime())/1000;
+    
 
    
-    const createItemId = contract.methods["createItem"].cacheSend(itemName,itemType,itemExpirationDateDay,itemExpirationDateMonth,itemExpirationDateYear, {
+    const createItemId = contract.methods["createItem"].cacheSend(itemName,itemType,itemExpirationDate, {
       from: drizzleState.accounts[0], gas: 4712388,
         gasPrice: 100000000000
     });
@@ -103,7 +109,7 @@ class ShowItems extends React.Component {
         }
    
     	var components = myItems.map((item, index) => {
-            if (((item && item.value) !== undefined) && item.value !== 0x0000000000000000000000000000000000000000){
+            if (((item && item.value) !== undefined) && item.value !== "0x0000000000000000000000000000000000000000"){
                 
     		  return (<Item key={index} 
                 address={item.value}

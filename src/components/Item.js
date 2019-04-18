@@ -21,6 +21,7 @@ class Item extends React.Component {
         this.showButtons = this.showButtons.bind(this);
         this.addRuteVisit = this.addRuteVisit.bind(this);
         this.showRute = this.showRute.bind(this);
+        this.parseDate = this.parseDate.bind(this);
     } 
 
     componentDidMount() {
@@ -126,8 +127,8 @@ class Item extends React.Component {
 
               <p>¿Es el último hito en la ruta?</p>
                 <select name="isDelivered" id={"isDelivered"+this.props.index}>
-                  <option value={true}> Sí </option>
-                  <option value={false}> No </option>
+                  <option value={"true"}> Sí </option>
+                  <option value={"false"}> No </option>
                 </select>
               <input type="submit" value="Crear nuevo hito en la ruta"/> 
             </form>
@@ -136,6 +137,12 @@ class Item extends React.Component {
             <hr/>
           </div>)
       }
+    }
+
+    parseDate(input) {
+      var parts = input.match(/(\d+)/g);
+      // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
+      return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
     }
 
     addRuteVisit(e){
@@ -151,22 +158,18 @@ class Item extends React.Component {
         let visitKeyItem;
 
         const manip = (Number(document.getElementById("manipulator"+this.props.index).value))-1;
-        const dateIn = document.getElementById("itemDateIn"+this.props.index).value;
-        const dateOut = document.getElementById("itemDateOut"+this.props.index).value;
+        let dateIn = this.parseDate(document.getElementById("itemDateIn"+this.props.index).value);
+        let dateOut = this.parseDate(document.getElementById("itemDateOut"+this.props.index).value);
         const trsp = Number(document.getElementById("trsp"+this.props.index).value);
-        const isDelivered = Boolean(document.getElementById("isDelivered"+this.props.index).value);
+        const isDelivered = document.getElementById("isDelivered"+this.props.index).value === "true";
 
         const manipAddress = this.props.manipulators[manip].value;
-        let dayDateIn = Number(dateIn.getDay());
-        let monthDateIn = Number(dateIn.getMonth());
-        let yearDateIn = Number(dateIn.getFullYear());
+        dateIn = dateIn.getTime() * 1000;
         
-        let dayDateOut = Number(dateOut.getDay());
-        let monthDateOut = Number(dateOut.getMonth());
-        let yearDateOut = Number(dateOut.getFullYear());
+        dateOut = dateOut.getTime() * 1000;
         
     
-        visitKeyItem = instance.methods["addVisit"].cacheSend(manipAddress,dayDateIn,monthDateIn,yearDateIn,dayDateOut,monthDateOut,yearDateOut,trsp,isDelivered, {
+        visitKeyItem = instance.methods["addVisit"].cacheSend(manipAddress,dateIn,dateOut,trsp,isDelivered, {
               from: drizzleState.accounts[0], gas: 4712388,
         gasPrice: 100000000000
           });
@@ -196,10 +199,8 @@ class Item extends React.Component {
       let itemName = "Waiting";
       let itemType = "Waiting";
       let ruteLength = "Waiting";
-      let expirationDate = "Waiting";
+      let expirationDate = new Date();
       let isDelivered = "Waiting";
-      let reference = new Date(2019,1,1);
-      reference = reference.getTime();
 
 
       const instance = this.props.drizzleState.contracts[this.props.address];
@@ -227,7 +228,9 @@ class Item extends React.Component {
           ruteLength = (ruteLength && ruteLength.value) || 0;
 
           expirationDate = instance.expirationDate[this.state.itemExpirationDateKey];
-          expirationDate = (expirationDate && expirationDate.value) || "??";
+          expirationDate = (expirationDate && expirationDate.value) || 0;
+
+          expirationDate = new Date(Number(expirationDate) * 1000);
 
          
 
@@ -247,7 +250,7 @@ class Item extends React.Component {
               <ul>
                 <li>Su nombre es: {itemName}</li>
                 <li>Es un item de tipo: {itemType}</li>
-                <li>Caduca el dia <input value={String(expirationDate.day)} style={{width:"200px"}} readOnly/> del mes <input value={String(expirationDate.month)} style={{width:"200px"}} readOnly/> del año <input value={String(expirationDate.year)} style={{width:"200px"}} readOnly/></li>
+                <li>Caduca el dia <input value={String(expirationDate.getDate())} style={{width:"200px"}} readOnly/> del mes <input value={String(expirationDate.getMonth()+1)} style={{width:"200px"}} readOnly/> del año <input value={String(expirationDate.getFullYear())} style={{width:"200px"}} readOnly/></li>
               </ul>
               {this.showRute(ruteLength)}
               {this.showButtons()}

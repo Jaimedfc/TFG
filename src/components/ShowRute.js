@@ -64,7 +64,7 @@ class ShowRute extends React.Component {
    
       var components = myVisits.map((visit, index) => {
             if (((visit && visit.value) !== undefined)){
-                
+  
           return (<Visit key={index} 
                 manipulator={visit.value.manipulator}
                 dateIn={visit.value.dateIn}

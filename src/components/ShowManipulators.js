@@ -16,7 +16,7 @@ class ShowManipulators extends React.Component {
         var manipulatorsKey = [...this.state.manipulatorsKey];
 
         let changed = false;
-        console.log(l1,l2);
+        
             for (var i=0; i<l2; i++){
 
                 if (manipulatorsKey[i]) continue;
@@ -46,7 +46,7 @@ class ShowManipulators extends React.Component {
     	}
    
     	var components = myManipulators.map((manip, index) => {
-            if (((manip && manip.value) !== undefined) && manip.value !== 0x0000000000000000000000000000000000000000){
+            if (((manip && manip.value) !== undefined) && manip.value !== "0x0000000000000000000000000000000000000000"){
                 
     		  return (<Manipulator key={index} address={manip.value} index={index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>);
             }else return null;
