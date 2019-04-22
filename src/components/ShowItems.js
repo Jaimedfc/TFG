@@ -117,7 +117,8 @@ class ShowItems extends React.Component {
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
                 manipulators={myManipulators}
-                isManipulator={this.props.isManipulator}/>);
+                isManipulator={this.props.isManipulator}
+                isAdmin={this.props.isAdmin}/>);
             }else return null;
     	});
 

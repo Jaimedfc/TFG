@@ -1,16 +1,17 @@
 import React from "react";
-import ShowRute from "./ShowRute";
+import ShowRoute from "./ShowRoute";
 
 class Item extends React.Component {
 
 
   state = { itemNameKey: null,
             itemTypeKey: null,
-            itemRuteLengthKey: null,
+            itemRouteLengthKey: null,
             itemExpirationDateKey: null,
             deleteContractId:null,
             itemIsDeliveredKey:null,
-            addVisitKey:[] };
+            addVisitKey:[],
+            showRoute: false };
 
 
     constructor(props) {
@@ -19,9 +20,10 @@ class Item extends React.Component {
         
         this.deleteContract = this.deleteContract.bind(this);
         this.showButtons = this.showButtons.bind(this);
-        this.addRuteVisit = this.addRuteVisit.bind(this);
-        this.showRute = this.showRute.bind(this);
+        this.addRouteVisit = this.addRouteVisit.bind(this);
+        this.showRoute = this.showRoute.bind(this);
         this.parseDate = this.parseDate.bind(this);
+        this.changeStateRoute = this.changeStateRoute.bind(this);
     } 
 
     componentDidMount() {
@@ -54,7 +56,7 @@ class Item extends React.Component {
 
         let changed = false;
 
-        let { itemNameKey, itemTypeKey, itemRuteLengthKey, itemExpirationDateKey, itemIsDeliveredKey } = this.state;
+        let { itemNameKey, itemTypeKey, itemRouteLengthKey, itemExpirationDateKey, itemIsDeliveredKey } = this.state;
 
         if (!this.state.itemNameKey) {
             // Decirle a drizzle que queremos observar el metodo getState().
@@ -70,9 +72,9 @@ class Item extends React.Component {
             changed = true;
         }
 
-        if (!this.state.itemRuteLengthKey) {
+        if (!this.state.itemRouteLengthKey) {
             // Decirle a drizzle que queremos observar el metodo getState().
-            itemRuteLengthKey = instance.methods["ruteLength"].cacheCall();
+            itemRouteLengthKey = instance.methods["routeLength"].cacheCall();
             
             changed = true;
         }
@@ -94,7 +96,7 @@ class Item extends React.Component {
 
         if (changed) {
             // Actualizar el estado local
-            this.setState({ itemNameKey, itemTypeKey, itemExpirationDateKey, itemRuteLengthKey, itemIsDeliveredKey });
+            this.setState({ itemNameKey, itemTypeKey, itemExpirationDateKey, itemRouteLengthKey, itemIsDeliveredKey });
         }
     }
 
@@ -114,7 +116,32 @@ class Item extends React.Component {
     showButtons(){
       if(this.props.isManipulator){
         return(<div>
-            <form onSubmit={this.addRuteVisit}>
+          <h3>Crear nuevo hito en la ruta</h3>
+            <form onSubmit={this.addRouteVisit}>
+              <p><input id={"manipulator"+this.props.index} min={0} max={this.props.manipulators.length} type="number" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Número de manipulador" required/></p>
+              <p>Fecha de Entrada: <input id={"itemDateIn"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
+              <p>(Si es el último hito en la ruta, seleccione cualquier fecha) Fecha de Salida: <input id={"itemDateOut"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
+              <p>(Si es el último hito en la ruta, seleccione cualquier transporte) Tipo de transpote de salida:</p>
+                <select name="trsp" id={"trsp"+this.props.index}>
+                  <option value={1}> Tierra </option>
+                  <option value={2}> Mar </option>
+                  <option value={3}> Aire </option>
+                </select>
+
+              <p>¿Es el último hito en la ruta?</p>
+                <select name="isDelivered" id={"isDelivered"+this.props.index}>
+                  <option value={"true"}> Sí </option>
+                  <option value={"false"}> No </option>
+                </select>
+              <input type="submit" value="Crear nuevo hito en la ruta"/> 
+            </form>
+            <hr/>
+          </div>)
+      }else if(this.props.isAdmin){
+
+        return(<div>
+            <h3>Crear nuevo hito en la ruta</h3>
+            <form onSubmit={this.addRouteVisit}>
               <p><input id={"manipulator"+this.props.index} min={0} max={this.props.manipulators.length} type="number" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Número de manipulador" required/></p>
               <p>Fecha de Entrada: <input id={"itemDateIn"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
               <p>(Si es el último hito en la ruta, seleccione cualquier fecha) Fecha de Salida: <input id={"itemDateOut"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
@@ -136,16 +163,17 @@ class Item extends React.Component {
             <button onClick={this.deleteContract}>Eliminar Item</button>
             <hr/>
           </div>)
+      }else{
+        return null;
       }
     }
 
     parseDate(input) {
       var parts = input.match(/(\d+)/g);
-      // new Date(year, month [, date [, hours[, minutes[, seconds[, ms]]]]])
       return new Date(parts[0], parts[1]-1, parts[2]); // months are 0-based
     }
 
-    addRuteVisit(e){
+    addRouteVisit(e){
 
         if(e) e.preventDefault();
 
@@ -158,8 +186,8 @@ class Item extends React.Component {
         let visitKeyItem;
 
         const manip = (Number(document.getElementById("manipulator"+this.props.index).value))-1;
-        let dateIn = this.parseDate(document.getElementById("itemDateIn"+this.props.index).value);
-        let dateOut = this.parseDate(document.getElementById("itemDateOut"+this.props.index).value);
+        let dateIn = this.parseDate(String(document.getElementById("itemDateIn"+this.props.index).value));
+        let dateOut = this.parseDate(String(document.getElementById("itemDateOut"+this.props.index).value));
         const trsp = Number(document.getElementById("trsp"+this.props.index).value);
         const isDelivered = document.getElementById("isDelivered"+this.props.index).value === "true";
 
@@ -180,17 +208,30 @@ class Item extends React.Component {
 
     }
 
-    showRute(ruteLength){
+    showRoute(routeLength){
 
-      if (ruteLength > 0){
+      if ( routeLength>0 && this.state.showRoute){
 
 
-        return (<ShowRute address={this.props.address}
+        return (<ShowRoute address={this.props.address}
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
                 manipulators={this.props.manipulators}
-                ruteLength={ruteLength}/>);
+                routeLength={routeLength}/>);
       }else return null;
+    }
+
+    changeStateRoute(e){
+      if(e) e.preventDefault();
+      let showRoute=false;
+      if (this.state.showRoute){
+        showRoute=false;
+        this.setState({showRoute});
+      }else {
+        showRoute=true;
+        this.setState({showRoute});
+      }
+      
     }
 
 
@@ -198,9 +239,10 @@ class Item extends React.Component {
 
       let itemName = "Waiting";
       let itemType = "Waiting";
-      let ruteLength = "Waiting";
+      let routeLength = "Waiting";
       let expirationDate = new Date();
       let isDelivered = "Waiting";
+      let showRouteState = this.state.showRoute;
 
 
       const instance = this.props.drizzleState.contracts[this.props.address];
@@ -224,8 +266,8 @@ class Item extends React.Component {
             itemType = "Otros";
           }
 
-          ruteLength = instance.ruteLength[this.state.itemRuteLengthKey];
-          ruteLength = (ruteLength && ruteLength.value) || 0;
+          routeLength = instance.routeLength[this.state.itemRouteLengthKey];
+          routeLength = (routeLength && routeLength.value) || 0;
 
           expirationDate = instance.expirationDate[this.state.itemExpirationDateKey];
           expirationDate = (expirationDate && expirationDate.value) || 0;
@@ -252,8 +294,12 @@ class Item extends React.Component {
                 <li>Es un item de tipo: {itemType}</li>
                 <li>Caduca el dia <input value={String(expirationDate.getDate())} style={{width:"200px"}} readOnly/> del mes <input value={String(expirationDate.getMonth()+1)} style={{width:"200px"}} readOnly/> del año <input value={String(expirationDate.getFullYear())} style={{width:"200px"}} readOnly/></li>
               </ul>
-              {this.showRute(ruteLength)}
+              <form onSubmit={this.changeStateRoute}>
+                <input type="submit" value="Mostrar/Ocultar ruta"/>
+              </form>
+              {this.showRoute(routeLength)}
               {this.showButtons()}
+              
 
           </div>
         );

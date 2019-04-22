@@ -18,7 +18,7 @@ contract Item {
 
 	string public name;
 	itemType public itType;
-	Visit[] public rute;
+	Visit[] public route;
 	uint public expirationDate; 
 	bool public isDelivered;   //True if it has been delivered to the last manipulator
 	address payable owner;
@@ -45,9 +45,9 @@ contract Item {
 
 	//***********GETTERS*****************
 
-	function ruteLength() view public returns (uint){
+	function routeLength() view public returns (uint){
 
-  		return rute.length;
+  		return route.length;
   	}
 
 
@@ -70,7 +70,7 @@ contract Item {
 
 
   		Visit memory visit = Visit(Manipulator(_manipulator), _dateIn, _dateOut, trsp);		
-  		rute.push(visit);
+  		route.push(visit);
   		isDelivered = _isDelivered;
   		
 

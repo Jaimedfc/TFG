@@ -76,13 +76,19 @@ class ContractOrch extends React.Component {
 
 
         <ShowManipulators manipLength={(manipulatorsLength && manipulatorsLength.value) || 0} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
-
-        <hr/>
+        <ShowItems drizzle={this.props.drizzle}
+            drizzleState={this.props.drizzleState}
+            isManipulator={false}
+            isAdmin={true}
+            itemsLength={(itemsLength && itemsLength.value) || 0}
+            manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
+        />
         
         <h1>Sección para Manipuladores</h1>
         <ShowItems drizzle={this.props.drizzle}
          drizzleState={this.props.drizzleState}
          isManipulator={true}
+         isAdmin={false}
          itemsLength={(itemsLength && itemsLength.value) || 0}
          manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
         />

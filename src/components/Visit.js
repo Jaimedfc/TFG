@@ -30,6 +30,8 @@ class Visit extends React.Component {
       console.log("DATEIN"+dateIn);
       dateIn = new Date(dateIn * 1000);
       const dateOut = new Date(Number(_dateOut) * 1000);
+      console.log("DATEIN "+dateIn, "DATEOUT "+dateOut);
+
       let _trsp;
       if (Number(trsp) === 0){
             _trsp = "Tierra";
