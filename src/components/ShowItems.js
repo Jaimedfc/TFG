@@ -68,7 +68,7 @@ class ShowItems extends React.Component {
     const itemName = String(document.getElementById("itemName").value);
     const itemType = Number(document.getElementById("itemType").value);
     let itemExpirationDate = this.parseDate(document.getElementById("itemExpirationDate").value);
-    itemExpirationDate = (itemExpirationDate.getTime())/1000;
+    itemExpirationDate = (itemExpirationDate.getTime());
     
 
    

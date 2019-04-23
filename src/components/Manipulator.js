@@ -15,6 +15,7 @@ class Manipulator extends React.Component {
         super(props);
         
         this.deleteContract = this.deleteContract.bind(this);
+        this.calcGeoLocation = this.calcGeoLocation.bind(this);
     } 
 
     componentDidMount() {
@@ -103,6 +104,18 @@ class Manipulator extends React.Component {
     // };
     
 
+    calcGeoLocation(_int, _dec, _exp){
+      const int = Number(_int);
+      const dec = Number(_dec);
+      const exp = Number(_exp);
+
+      if(int < 0){
+        return int - dec*Math.pow(10, -1*exp);
+      }else{
+        return int + dec*Math.pow(10, -1*exp);
+      }
+      
+    }
     deleteContract(){
 
       const {drizzle, drizzleState} = this.props;
@@ -147,8 +160,10 @@ class Manipulator extends React.Component {
             <h2>{"Manipulador número "+(this.props.index + 1)+": "+this.props.address}</h2>
             <ul>
               <li>Su nombre es: {manipulatorName}</li>
-              <li>Su localización es: {manipulatorLocationName} 
-                  ({manipulatorLocation.lat},{manipulatorLocation.long})</li>
+              <li>Su localización es: {manipulatorLocationName}</li>
+              <li><p>Latitud: {this.calcGeoLocation(manipulatorLocation.latInt,manipulatorLocation.latDec, manipulatorLocation.latExp)}
+                  <span> Longitud: {this.calcGeoLocation(manipulatorLocation.longInt,manipulatorLocation.longDec, manipulatorLocation.longExp)}</span></p>
+              </li>
               <li>Información: {manipulatorInfo}</li>
             </ul>
             <button onClick={this.deleteContract}>Eliminar Manipulador</button>

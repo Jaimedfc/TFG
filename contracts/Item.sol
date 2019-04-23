@@ -16,6 +16,7 @@ contract Item {
 	}
 
 
+
 	string public name;
 	itemType public itType;
 	Visit[] public route;

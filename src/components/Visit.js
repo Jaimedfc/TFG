@@ -27,11 +27,11 @@ class Visit extends React.Component {
     showVisit(manipulatorAddress, _dateIn, _dateOut, trsp){
 
       let dateIn = Number(_dateIn);
-      dateIn = new Date(dateIn * 1000);
-      const dateOut = new Date(Number(_dateOut) * 1000);
+      dateIn = new Date(dateIn);
+      const dateOut = new Date(Number(_dateOut));
       let _trsp;
       var mL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-      
+
       if (Number(trsp) === 0){
             _trsp = "Tierra";
           } else if(Number(trsp) === 1){

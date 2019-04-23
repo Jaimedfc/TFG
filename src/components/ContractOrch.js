@@ -35,11 +35,15 @@ class ContractOrch extends React.Component {
     const contract = drizzle.contracts.ManipFactory;
     const manipName = String(document.getElementById("manipName").value);
     const manipNameLocation = String(document.getElementById("manipNameLocation").value);
-    const manipLatitude = parseFloat(document.getElementById("manipLatitude").value);
-    const manipLongitude = parseFloat(document.getElementById("manipLongitude").value);
+    const manipLatitudeInt = Number(document.getElementById("manipLatitudeInt").value.trim());
+    const manipLongitudeInt = Number(document.getElementById("manipLongitudeInt").value.trim());
+    const manipLatitudeDec = Number(document.getElementById("manipLatitudeDec").value.trim());
+    const manipLongitudeDec = Number(document.getElementById("manipLongitudeDec").value.trim());
+    const manipLatitudeExp = document.getElementById("manipLatitudeDec").value.trim().length;
+    const manipLongitudeExp = document.getElementById("manipLongitudeDec").value.trim().length;
     const manipInfo = String(document.getElementById("manipInfo").value);
 
-    const createManipulatorId = contract.methods["createManipulator"].cacheSend(manipName,manipNameLocation,manipLatitude,manipLongitude,manipInfo, {
+    const createManipulatorId = contract.methods["createManipulator"].cacheSend(manipName,manipNameLocation,manipLatitudeInt,manipLatitudeDec,manipLatitudeExp,manipLongitudeInt,manipLongitudeDec,manipLongitudeExp,manipInfo, {
       from: drizzleState.accounts[0], gas: 4712388,
         gasPrice: 100000000000
     });
@@ -68,8 +72,8 @@ class ContractOrch extends React.Component {
         <form onSubmit={this.createManipulator.bind(this)}>
             <p><input id="manipName" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del manipulador" required/></p>
             <p><input id="manipNameLocation" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre de la localización" required/></p>
-            <p><input id="manipLatitude" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Latitud" required/></p>
-            <p><input id="manipLongitude" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Longitud" required/></p>
+            <p><label>Latitud: </label><input id="manipLatitudeInt" type="text" ref={(element) => { this.input = element }} required/>.<span><input id="manipLatitudeDec" type="text" ref={(element) => { this.input = element }} required/></span></p>
+            <p><label>Longitud: </label><input id="manipLongitudeInt" type="text" ref={(element) => { this.input = element }} required/>.<span><input id="manipLongitudeDec" type="text" ref={(element) => { this.input = element }} required/></span></p>
             <p><textarea id="manipInfo" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Información del manipulador" required></textarea></p>
             <input type="submit" value="Crear nuevo manipulador"/> 
         </form>

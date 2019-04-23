@@ -10,9 +10,9 @@ contract ManipFactory {
 
   //********************CONSTRUCTOR************
 
-  function createManipulator(string memory name, string memory locationName, int latitude, int longitude, string memory info) public{
+  function createManipulator(string memory name, string memory locationName, int latitudeInt, uint latitudeDec, uint latitudeExp, int longitudeInt, uint longitudeDec, uint longitudeExp, string memory info) public{
 
-  	Manipulator newManip = new Manipulator(name, locationName, latitude, longitude, info);
+  	Manipulator newManip = new Manipulator(name, locationName, latitudeInt, latitudeDec, latitudeExp, longitudeInt, longitudeDec, longitudeExp, info);
   	bool pushed=false;
 
   	for (uint i = 0; i < manipulators.length; i++){

@@ -192,9 +192,9 @@ class Item extends React.Component {
         const isDelivered = document.getElementById("isDelivered"+this.props.index).value === "true";
 
         const manipAddress = this.props.manipulators[manip].value;
-        dateIn = dateIn.getTime()/1000;
+        dateIn = dateIn.getTime();
         
-        dateOut = dateOut.getTime()/1000;
+        dateOut = dateOut.getTime();
         
     
         visitKeyItem = instance.methods["addVisit"].cacheSend(manipAddress,dateIn,dateOut,trsp,isDelivered, {
@@ -272,7 +272,7 @@ class Item extends React.Component {
           expirationDate = instance.expirationDate[this.state.itemExpirationDateKey];
           expirationDate = (expirationDate && expirationDate.value) || 0;
 
-          expirationDate = new Date(Number(expirationDate) * 1000);
+          expirationDate = new Date(Number(expirationDate));
 
          
 
