@@ -192,9 +192,9 @@ class Item extends React.Component {
         const isDelivered = document.getElementById("isDelivered"+this.props.index).value === "true";
 
         const manipAddress = this.props.manipulators[manip].value;
-        dateIn = dateIn.getTime() * 1000;
+        dateIn = dateIn.getTime()/1000;
         
-        dateOut = dateOut.getTime() * 1000;
+        dateOut = dateOut.getTime()/1000;
         
     
         visitKeyItem = instance.methods["addVisit"].cacheSend(manipAddress,dateIn,dateOut,trsp,isDelivered, {

@@ -3,7 +3,7 @@ import React from "react";
 class Visit extends React.Component {
 
 
-  state = { };
+  //state = { };
 
 
     constructor(props) {
@@ -13,26 +13,25 @@ class Visit extends React.Component {
         
     } 
 
-    componentDidMount() {
+    //componentDidMount() {
 
       
-    }
+    //}
 
 
-    componentDidUpdate(prevProps, prevState, snapshoot) {
+    //componentDidUpdate(prevProps, prevState, snapshoot) {
 
     
-    }
+    //}
 
     showVisit(manipulatorAddress, _dateIn, _dateOut, trsp){
 
       let dateIn = Number(_dateIn);
-      console.log("DATEIN"+dateIn);
       dateIn = new Date(dateIn * 1000);
       const dateOut = new Date(Number(_dateOut) * 1000);
-      console.log("DATEIN "+dateIn, "DATEOUT "+dateOut);
-
       let _trsp;
+      var mL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      
       if (Number(trsp) === 0){
             _trsp = "Tierra";
           } else if(Number(trsp) === 1){
@@ -44,20 +43,20 @@ class Visit extends React.Component {
       if(this.props.index === 0){
         return(<div>
               <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200px"}} readOnly/>
-              <p>Su fecha de nacimiento/plantación es:</p> <input value={"El día "+dateIn.getDate()+ " del mes "+ dateIn.getMonth()+" del año "+dateIn.getFullYear()} style={{width:"400px"}} readOnly/>
-              <p>Su fecha de salida es: <span><input value={"El día "+dateOut.getDate()+ " del mes "+ (dateOut.getMonth()+1)+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/></span>   por   <span><input value={_trsp} style={{width:"200"}} readOnly/></span></p>
+              <p>Su fecha de nacimiento/plantación es:</p> <input value={"El día "+dateIn.getDate()+ " de "+ mL[dateIn.getMonth()]+" del año "+dateIn.getFullYear()} style={{width:"400px"}} readOnly/>
+              <p>Su fecha de salida es: <span><input value={"El día "+dateOut.getDate()+ " de "+ mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/></span>   por   <span><input value={_trsp} style={{width:"200"}} readOnly/></span></p>
             </div>);
       }else if(this.props.index === (this.props.visitsLength-1)){
         return(<div>
               <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200px"}} readOnly/>
-              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.getDate()+ " del mes "+ (dateOut.getMonth()+1)+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/>
+              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.getDate()+ " de "+ mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/>
             <hr/>
             </div>);
       }else{
         return(<div>
               <p>Su manipulador está en la dirección :</p> <input value={manipulatorAddress} style={{width:"200px"}} readOnly/>
-              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.getDate()+ " del mes "+ (dateIn.getMonth()+1)+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/>
-              <p>Su fecha de salida es: <span><input value={"El día "+dateOut.getDate()+ " del mes "+(dateOut.getMonth()+1)+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/></span>  por  <span><input value={_trsp} style={{width:"200"}} readOnly/></span></p>
+              <p>Su fecha de entrada es:</p> <input value={"El día "+dateIn.getDate()+ " de "+ mL[dateIn.getMonth()]+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/>
+              <p>Su fecha de salida es: <span><input value={"El día "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()} style={{width:"400px"}} readOnly/></span>  por  <span><input value={_trsp} style={{width:"200"}} readOnly/></span></p>
             </div>);
       }
     }
