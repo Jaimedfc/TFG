@@ -140,26 +140,6 @@ class Item extends React.Component {
       }else if(this.props.isAdmin){
 
         return(<div>
-            <h3>Crear nuevo hito en la ruta</h3>
-            <form onSubmit={this.addRouteVisit}>
-              <p><input id={"manipulator"+this.props.index} min={0} max={this.props.manipulators.length} type="number" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Número de manipulador" required/></p>
-              <p>Fecha de Entrada: <input id={"itemDateIn"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
-              <p>(Si es el último hito en la ruta, seleccione cualquier fecha) Fecha de Salida: <input id={"itemDateOut"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
-              <p>(Si es el último hito en la ruta, seleccione cualquier transporte) Tipo de transpote de salida:</p>
-                <select name="trsp" id={"trsp"+this.props.index}>
-                  <option value={1}> Tierra </option>
-                  <option value={2}> Mar </option>
-                  <option value={3}> Aire </option>
-                </select>
-
-              <p>¿Es el último hito en la ruta?</p>
-                <select name="isDelivered" id={"isDelivered"+this.props.index}>
-                  <option value={"true"}> Sí </option>
-                  <option value={"false"}> No </option>
-                </select>
-              <input type="submit" value="Crear nuevo hito en la ruta"/> 
-            </form>
-
             <button onClick={this.deleteContract}>Eliminar Item</button>
             <hr/>
           </div>)
@@ -280,7 +260,7 @@ class Item extends React.Component {
 
       }
 
-        if (!this.props.isManipulator && !isDelivered){
+        if (!this.props.isManipulator && !isDelivered && !this.props.isAdmin){
           return null;
         }else{
 

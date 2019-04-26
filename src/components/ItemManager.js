@@ -1,7 +1,7 @@
 import React from "react";
 import Item from "./Item";
 
-class ShowItems extends React.Component {
+class ItemManager extends React.Component {
 
 
 
@@ -148,4 +148,4 @@ class ShowItems extends React.Component {
     }
 }
 
-export default ShowItems;
+export default ItemManager;

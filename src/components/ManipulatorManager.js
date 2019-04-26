@@ -1,7 +1,7 @@
 import React from "react";
 import Manipulator from "./Manipulator";
 
-class ShowManipulators extends React.Component {
+class ManipulatorManager extends React.Component {
 
 
 
@@ -57,4 +57,4 @@ class ShowManipulators extends React.Component {
 		}
 }
 
-export default ShowManipulators;
+export default ManipulatorManager;

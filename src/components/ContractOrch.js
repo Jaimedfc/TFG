@@ -1,7 +1,7 @@
 import React from "react";
 
-import ShowManipulators from "./ShowManipulators";
-import ShowItems from "./ShowItems";
+import ManipulatorManager from "./ManipulatorManager";
+import ItemManager from "./ItemManager";
 
 class ContractOrch extends React.Component {
   state = { manipulatorCounterKey:null,
@@ -79,8 +79,8 @@ class ContractOrch extends React.Component {
         </form>
 
 
-        <ShowManipulators manipLength={(manipulatorsLength && manipulatorsLength.value) || 0} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
-        <ShowItems drizzle={this.props.drizzle}
+        <ManipulatorManager manipLength={(manipulatorsLength && manipulatorsLength.value) || 0} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
+        <ItemManager drizzle={this.props.drizzle}
             drizzleState={this.props.drizzleState}
             isManipulator={false}
             isAdmin={true}
@@ -89,7 +89,7 @@ class ContractOrch extends React.Component {
         />
         
         <h1>Sección para Manipuladores</h1>
-        <ShowItems drizzle={this.props.drizzle}
+        <ItemManager drizzle={this.props.drizzle}
          drizzleState={this.props.drizzleState}
          isManipulator={true}
          isAdmin={false}
@@ -101,7 +101,7 @@ class ContractOrch extends React.Component {
         <hr/>
 
         <h1>Sección para clientes</h1>
-        <ShowItems drizzle={this.props.drizzle}
+        <ItemManager drizzle={this.props.drizzle}
          drizzleState={this.props.drizzleState}
          isManipulator={false}
          itemsLength={(itemsLength && itemsLength.value) || 0}
