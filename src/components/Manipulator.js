@@ -23,10 +23,11 @@ class Manipulator extends React.Component {
         console.log("==== COMPONENTE Manipulator MONTADO ============", this.props.address );
 
         const { drizzle } = this.props;
+        const instance = drizzle.contracts[this.props.address];
 
         const json = require('../contracts/Manipulator.json');
         
-        if (drizzle.contracts[this.props.address] === undefined){
+        if (instance === undefined){
           const contractConfig = {
              contractName: this.props.address,
              web3Contract: new drizzle.web3.eth.Contract(json.abi, this.props.address)
@@ -34,6 +35,47 @@ class Manipulator extends React.Component {
 
           drizzle.addContract(contractConfig, []);
 
+        }
+
+
+        if (!instance) return;
+
+        let changed = false;
+
+        let { manipulatorNameKey, manipulatorLocationNameKey, manipulatorInfoKey, manipulatorLocationKey } = this.state;
+
+        if (!this.state.manipulatorNameKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            manipulatorNameKey = instance.methods["name"].cacheCall();
+            
+            changed = true;
+        }
+
+        if (!this.state.manipulatorLocationNameKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            manipulatorLocationNameKey = instance.methods["locationName"].cacheCall();
+            
+            changed = true;
+        }
+
+        if (!this.state.manipulatorInfoKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            manipulatorInfoKey = instance.methods["info"].cacheCall();
+            
+            changed = true;
+        }
+
+        if (!this.state.manipulatorLocationKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            manipulatorLocationKey = instance.methods["location"].cacheCall();
+            
+            changed = true;
+        }
+
+
+        if (changed) {
+            // Actualizar el estado local
+            this.setState({ manipulatorNameKey, manipulatorLocationNameKey, manipulatorLocationKey, manipulatorInfoKey });
         }
     }
 
@@ -86,22 +128,6 @@ class Manipulator extends React.Component {
     }
 
 
-    // changeItem = e => {
-    //     if(e) e.preventDefault();
-    //     const { drizzle, drizzleState } = this.props;
-    //     const contract = drizzle.contracts.Factory;
-    //     const id = "modifContract"+ this.props.index;
-    //     const item = String(document.getElementById(id).value);
-        
-    //     const setGoodId = contract.methods["setItem"].cacheSend(item,this.props.address, {
-    //          from: drizzleState.accounts[0]
-    //      });
-          
-            
-    //     this.setState({ setGoodId });
-        
-        
-    // };
     
 
     calcGeoLocation(_int, _dec, _exp){

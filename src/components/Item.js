@@ -31,10 +31,10 @@ class Item extends React.Component {
         console.log("==== COMPONENTE ITEM MONTADO ============", this.props.address );
 
         const { drizzle } = this.props;
-
+        const instance = drizzle.contracts[this.props.address];
         const json = require('../contracts/Item.json');
 
-        if (drizzle.contracts[this.props.address] === undefined){
+        if (instance === undefined){
 
           const contractConfig = {
              contractName: this.props.address,
@@ -42,6 +42,52 @@ class Item extends React.Component {
           };
 
           drizzle.addContract(contractConfig, []);
+        }
+        if (!instance) return;
+
+        let changed = false;
+
+        let { itemNameKey, itemTypeKey, itemRouteLengthKey, itemExpirationDateKey, itemIsDeliveredKey } = this.state;
+
+        if (!this.state.itemNameKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            itemNameKey = instance.methods["name"].cacheCall();
+            
+            changed = true;
+        }
+
+        if (!this.state.itemTypeKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            itemTypeKey = instance.methods["itType"].cacheCall();
+            
+            changed = true;
+        }
+
+        if (!this.state.itemRouteLengthKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            itemRouteLengthKey = instance.methods["routeLength"].cacheCall();
+            
+            changed = true;
+        }
+
+        if (!this.state.itemExpirationDateKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            itemExpirationDateKey = instance.methods["expirationDate"].cacheCall();
+            
+            changed = true;
+        }
+
+        if (!this.state.itemIsDeliveredKey) {
+            // Decirle a drizzle que queremos observar el metodo getState().
+            itemIsDeliveredKey = instance.methods["isDelivered"].cacheCall();
+            
+            changed = true;
+        }
+
+
+        if (changed) {
+            // Actualizar el estado local
+            this.setState({ itemNameKey, itemTypeKey, itemExpirationDateKey, itemRouteLengthKey, itemIsDeliveredKey });
         }
     }
 
@@ -130,8 +176,8 @@ class Item extends React.Component {
 
               <p>¿Es el último hito en la ruta?</p>
                 <select name="isDelivered" id={"isDelivered"+this.props.index}>
-                  <option value={"true"}> Sí </option>
                   <option value={"false"}> No </option>
+                  <option value={"true"}> Sí </option>
                 </select>
               <input type="submit" value="Crear nuevo hito en la ruta"/> 
             </form>
@@ -223,6 +269,8 @@ class Item extends React.Component {
       let expirationDate = new Date();
       let isDelivered = "Waiting";
       let showRouteState = this.state.showRoute;
+      const mL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+
 
 
       const instance = this.props.drizzleState.contracts[this.props.address];
@@ -272,7 +320,7 @@ class Item extends React.Component {
               <ul>
                 <li>Su nombre es: {itemName}</li>
                 <li>Es un item de tipo: {itemType}</li>
-                <li>Caduca el dia <input value={String(expirationDate.getDate())} style={{width:"200px"}} readOnly/> del mes <input value={String(expirationDate.getMonth()+1)} style={{width:"200px"}} readOnly/> del año <input value={String(expirationDate.getFullYear())} style={{width:"200px"}} readOnly/></li>
+                <li>Caduca el dia <input value={String(expirationDate.getDate())} style={{width:"200px"}} readOnly/> del mes <input value={mL[expirationDate.getMonth()]} style={{width:"200px"}} readOnly/> del año <input value={String(expirationDate.getFullYear())} style={{width:"200px"}} readOnly/></li>
               </ul>
               <form onSubmit={this.changeStateRoute}>
                 <input type="submit" value="Mostrar/Ocultar ruta"/>

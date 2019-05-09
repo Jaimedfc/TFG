@@ -30,7 +30,7 @@ class Visit extends React.Component {
       dateIn = new Date(dateIn);
       const dateOut = new Date(Number(_dateOut));
       let _trsp;
-      var mL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+      const mL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
       if (Number(trsp) === 0){
             _trsp = "Tierra";

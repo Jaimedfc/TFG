@@ -7,6 +7,27 @@ class ManipulatorManager extends React.Component {
 
 	state = { manipulatorsKey: []};
 
+    componentDidMount() {
+        
+        const l2 = +this.props.manipLength;
+        const { drizzle } = this.props;
+        const contract = drizzle.contracts.ManipFactory;
+        var manipulatorsKey = [...this.state.manipulatorsKey];
+
+        let changed = false;
+        
+            for (var i=0; i<l2; i++){
+
+                if (manipulatorsKey[i]) continue;
+
+                changed = true;
+                manipulatorsKey[i] = contract.methods["manipulators"].cacheCall(i);
+            }
+            changed && this.setState({ manipulatorsKey });
+        
+    
+    }
+
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		
         const l1 = prevProps.manipLength || 0;
@@ -28,6 +49,11 @@ class ManipulatorManager extends React.Component {
     	
     
 	}
+
+    componentWillUnmount(){
+        const manipulatorsKey = [];
+        this.setState({manipulatorsKey});
+    }
 
     
 

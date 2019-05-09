@@ -1,58 +1,60 @@
 import React from "react";
 
-import ManipulatorManager from "./ManipulatorManager";
-import ItemManager from "./ItemManager";
+import ClientView from "./ClientView";
+import ManipView from "./ManipView";
+import AdminView from "./AdminView";
 
 class ContractOrch extends React.Component {
-  state = { manipulatorCounterKey:null,
-            createManipulatorId:null,
-            itemCounterKey:null};
+  state = { showView: "client"};
 
 
 
 
-  componentDidMount() {
-    const { drizzle } = this.props;
-    const ManipFactory = drizzle.contracts.ManipFactory;
-    const ItemFactory = drizzle.contracts.ItemFactory;
 
-    var manipulatorCounterKey;
-    var itemCounterKey;
-      
-    manipulatorCounterKey = ManipFactory.methods["getManipLength"].cacheCall();
-    itemCounterKey = ItemFactory.methods["getItemsLength"].cacheCall();
-      
+  constructor(props) {
 
-    this.setState({ manipulatorCounterKey, itemCounterKey });
-    console.log(drizzle);
-    console.log(this.props.drizzleState);
-
-  }
-
-  createManipulator = e => {
-    if(e) e.preventDefault();
-    const { drizzle, drizzleState } = this.props;
-    const contract = drizzle.contracts.ManipFactory;
-    const manipName = String(document.getElementById("manipName").value);
-    const manipNameLocation = String(document.getElementById("manipNameLocation").value);
-    const manipLatitudeInt = Number(document.getElementById("manipLatitudeInt").value.trim());
-    const manipLongitudeInt = Number(document.getElementById("manipLongitudeInt").value.trim());
-    const manipLatitudeDec = Number(document.getElementById("manipLatitudeDec").value.trim());
-    const manipLongitudeDec = Number(document.getElementById("manipLongitudeDec").value.trim());
-    const manipLatitudeExp = document.getElementById("manipLatitudeDec").value.trim().length;
-    const manipLongitudeExp = document.getElementById("manipLongitudeDec").value.trim().length;
-    const manipInfo = String(document.getElementById("manipInfo").value);
-
-    const createManipulatorId = contract.methods["createManipulator"].cacheSend(manipName,manipNameLocation,manipLatitudeInt,manipLatitudeDec,manipLatitudeExp,manipLongitudeInt,manipLongitudeDec,manipLongitudeExp,manipInfo, {
-      from: drizzleState.accounts[0], gas: 4712388,
-        gasPrice: 100000000000
-    });
+        super(props);
+        this.changeViewAdmin = this.changeViewAdmin.bind(this);
+        this.changeViewManip = this.changeViewManip.bind(this);
+        this.changeViewClient = this.changeViewClient.bind(this);
+        this.showView = this.showView.bind(this);
+        
+  } 
 
   
-    // save the `createConId` for later reference
-    this.setState({ createManipulatorId});
+  
+
+  changeViewAdmin = e =>{
+    if(e) e.preventDefault();
+    const showView = "admin";
+    this.setState({showView});
+  }
+  changeViewManip = e =>{
+    if(e) e.preventDefault();
+    const showView = "manip";
+    this.setState({showView});
+  }
+  changeViewClient = e =>{
+    if(e) e.preventDefault();
+    const showView = "client";
+    this.setState({showView});
+  }
+
+  showView = (itemsLength, manipLength) => {
+    
+    if (this.state.showView === "admin"){
+
+      return (<AdminView drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>);
      
-   };
+    }else if(this.state.showView === "manip"){
+
+      return (<ManipView drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>);
+
+    }else{
+
+      return (<ClientView drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>);
+    }
+  }
 
   render() {
 
@@ -62,51 +64,15 @@ class ContractOrch extends React.Component {
 
     var manipulatorsLength = ManipFactory.getManipLength[this.state.manipulatorCounterKey];
     var itemsLength = ItemFactory.getItemsLength[this.state.itemCounterKey];
-    
+
   
     return (
       <div>
-        <h1>Sección para Admins</h1>
-        <h3>Se han creado {(manipulatorsLength && manipulatorsLength.value) || 0} manipuladores.</h3>
+      <p><a href="/" onClick={this.changeViewAdmin}>Administrador</a></p>
+      <p><a href="/" onClick={this.changeViewManip}>Manipulador</a></p>
+      <p><a href="/" onClick={this.changeViewClient}>Cliente</a></p>
 
-        <form onSubmit={this.createManipulator.bind(this)}>
-            <p><input id="manipName" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del manipulador" required/></p>
-            <p><input id="manipNameLocation" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre de la localización" required/></p>
-            <p><label>Latitud: </label><input id="manipLatitudeInt" type="text" ref={(element) => { this.input = element }} required/>.<span><input id="manipLatitudeDec" type="text" ref={(element) => { this.input = element }} required/></span></p>
-            <p><label>Longitud: </label><input id="manipLongitudeInt" type="text" ref={(element) => { this.input = element }} required/>.<span><input id="manipLongitudeDec" type="text" ref={(element) => { this.input = element }} required/></span></p>
-            <p><textarea id="manipInfo" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Información del manipulador" required></textarea></p>
-            <input type="submit" value="Crear nuevo manipulador"/> 
-        </form>
-
-
-        <ManipulatorManager manipLength={(manipulatorsLength && manipulatorsLength.value) || 0} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
-        <ItemManager drizzle={this.props.drizzle}
-            drizzleState={this.props.drizzleState}
-            isManipulator={false}
-            isAdmin={true}
-            itemsLength={(itemsLength && itemsLength.value) || 0}
-            manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
-        />
-        
-        <h1>Sección para Manipuladores</h1>
-        <ItemManager drizzle={this.props.drizzle}
-         drizzleState={this.props.drizzleState}
-         isManipulator={true}
-         isAdmin={false}
-         itemsLength={(itemsLength && itemsLength.value) || 0}
-         manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
-        />
-
-
-        <hr/>
-
-        <h1>Sección para clientes</h1>
-        <ItemManager drizzle={this.props.drizzle}
-         drizzleState={this.props.drizzleState}
-         isManipulator={false}
-         itemsLength={(itemsLength && itemsLength.value) || 0}
-         manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
-        />
+      {this.showView(itemsLength, manipulatorsLength)}
         
       </div>
     );
