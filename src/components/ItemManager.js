@@ -1,5 +1,5 @@
 import React from "react";
-import Item from "./Item";
+import ShowItem from "./ShowItem";
 
 class ItemManager extends React.Component {
 
@@ -111,7 +111,7 @@ class ItemManager extends React.Component {
     	var components = myItems.map((item, index) => {
             if (((item && item.value) !== undefined) && item.value !== "0x0000000000000000000000000000000000000000"){
                 
-    		  return (<Item key={index} 
+    		  return (<ShowItem key={index} 
                 address={item.value}
                 index={index} 
                 drizzle={this.props.drizzle} 

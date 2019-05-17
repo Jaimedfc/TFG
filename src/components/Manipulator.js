@@ -1,4 +1,5 @@
 import React from "react";
+import QRCode from "qrcode.react";
 
 class Manipulator extends React.Component {
 
@@ -182,7 +183,6 @@ class Manipulator extends React.Component {
 
         return (
           <div>
-
             <h2>{"Manipulador número "+(this.props.index + 1)+": "+this.props.address}</h2>
             <ul>
               <li>Su nombre es: {manipulatorName}</li>

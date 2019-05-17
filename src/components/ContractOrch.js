@@ -3,6 +3,7 @@ import React from "react";
 import ClientView from "./ClientView";
 import ManipView from "./ManipView";
 import AdminView from "./AdminView";
+import NavComponent from "./NavComponent";
 
 class ContractOrch extends React.Component {
   state = { showView: "client"};
@@ -68,11 +69,9 @@ class ContractOrch extends React.Component {
   
     return (
       <div>
-      <p><a href="/" onClick={this.changeViewAdmin}>Administrador</a></p>
-      <p><a href="/" onClick={this.changeViewManip}>Manipulador</a></p>
-      <p><a href="/" onClick={this.changeViewClient}>Cliente</a></p>
+        <NavComponent changeViewAdmin={this.changeViewAdmin} changeViewManip={this.changeViewManip} changeViewClient={this.changeViewClient} view={this.state.showView}/>
 
-      {this.showView(itemsLength, manipulatorsLength)}
+        {this.showView(itemsLength, manipulatorsLength)}
         
       </div>
     );

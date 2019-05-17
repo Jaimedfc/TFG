@@ -41,7 +41,6 @@ class ClientView extends React.Component {
         return (
           <div>
 
-            <h1>Sección para clientes</h1>
             <ItemManager drizzle={this.props.drizzle}
               drizzleState={this.props.drizzleState}
               isManipulator={false}

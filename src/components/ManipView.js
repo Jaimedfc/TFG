@@ -38,8 +38,6 @@ class ManipView extends React.Component {
 
         return (
           <div>
-
-            <h1>Sección para Manipuladores</h1>
             <ItemManager drizzle={this.props.drizzle}
               drizzleState={this.props.drizzleState}
               isManipulator={true}

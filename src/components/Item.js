@@ -1,5 +1,7 @@
 import React from "react";
 import ShowRoute from "./ShowRoute";
+import { Container, Row, Col } from 'reactstrap';
+
 
 class Item extends React.Component {
 
@@ -309,7 +311,11 @@ class Item extends React.Component {
       }
 
         if (!this.props.isManipulator && !isDelivered && !this.props.isAdmin){
-          return null;
+          return (
+            <Container>
+              <h4>Lo sentimos, este producto no esta disponible en estos momentos.</h4>
+            </Container>
+          );
         }else{
 
 

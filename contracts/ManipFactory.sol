@@ -5,7 +5,6 @@ import './Manipulator.sol';
 contract ManipFactory {
 
 	Manipulator[] public manipulators;
-	//lista con manipuladores "legales"
 
 
   //********************CONSTRUCTOR************

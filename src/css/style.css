@@ -53,3 +53,17 @@ color: blue;
 }
 .info-common {
 }
+
+.pointer{
+	cursor: pointer;
+}
+
+NavLink{
+	color: cornflowerblue;
+}
+body{
+	background-color: white;
+}
+.bg-light{
+	background-color: aliceblue !important;
+}
