@@ -34,12 +34,9 @@ class ShowItem extends React.Component {
     render() {
         if(this.state.showItem){
             return(
-                <Container className="pointer" onClick={this.showItem}>
+                <Container fluid className="margins">
                     <Row>
-                        <Col md="4" sm="12">
-                            <QRCode value={this.props.address}/>
-                        </Col>
-                        <Col md="8">
+                        <Col md="12">
                         <Item key={"item"+this.props.index} 
                             address={this.props.address}
                             index={this.props.index} 
@@ -47,7 +44,8 @@ class ShowItem extends React.Component {
                             drizzleState={this.props.drizzleState}
                             manipulators={this.props.manipulators}
                             isManipulator={this.props.isManipulator}
-                            isAdmin={this.props.isAdmin}/>
+                            isAdmin={this.props.isAdmin}
+                            click={this.showItem}/>
                         </Col>
                     </Row>
                     <hr/>
@@ -57,13 +55,13 @@ class ShowItem extends React.Component {
 
             return (
           
-              <Container className="pointer" onClick={this.showItem}>
+              <Container className="pointer margins" onClick={this.showItem} fluid>
               <Row>
-                    <Col md="4" sm="12">
+                    <Col md="3" sm="12">
                         <QRCode value={this.props.address}/>
                     </Col>
-                    <Col md="8">
-                        <h2>{"Producto número "+(this.props.index + 1)+"."}</h2>
+                    <Col md="9">
+                        <h2 className="subrayar">{"Producto número "+(this.props.index + 1)+"."}</h2>
                     </Col>
                 </Row>
                 <hr/>

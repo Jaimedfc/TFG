@@ -4,6 +4,8 @@ import ClientView from "./ClientView";
 import ManipView from "./ManipView";
 import AdminView from "./AdminView";
 import NavComponent from "./NavComponent";
+import Footer from "./Footer";
+import {Container} from "reactstrap";
 
 class ContractOrch extends React.Component {
   state = { showView: "client"};
@@ -68,12 +70,12 @@ class ContractOrch extends React.Component {
 
   
     return (
-      <div>
+      <Container fluid>
         <NavComponent changeViewAdmin={this.changeViewAdmin} changeViewManip={this.changeViewManip} changeViewClient={this.changeViewClient} view={this.state.showView}/>
 
         {this.showView(itemsLength, manipulatorsLength)}
-        
-      </div>
+        <Footer view={this.state.showView}/>
+      </Container>
     );
   }
 }

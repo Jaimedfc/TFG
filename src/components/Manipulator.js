@@ -1,5 +1,4 @@
 import React from "react";
-import QRCode from "qrcode.react";
 
 class Manipulator extends React.Component {
 
@@ -183,9 +182,8 @@ class Manipulator extends React.Component {
 
         return (
           <div>
-            <h2>{"Manipulador número "+(this.props.index + 1)+": "+this.props.address}</h2>
+            <h2 className="subrayar" onClick={this.props.click}>{"Manipulador número "+(this.props.index + 1)+": "+manipulatorName}</h2>
             <ul>
-              <li>Su nombre es: {manipulatorName}</li>
               <li>Su localización es: {manipulatorLocationName}</li>
               <li><p>Latitud: {this.calcGeoLocation(manipulatorLocation.latInt,manipulatorLocation.latDec, manipulatorLocation.latExp)}
                   <span> Longitud: {this.calcGeoLocation(manipulatorLocation.longInt,manipulatorLocation.longDec, manipulatorLocation.longExp)}</span></p>

@@ -1,6 +1,6 @@
 import React from "react";
 import ShowRoute from "./ShowRoute";
-import { Container, Row, Col } from 'reactstrap';
+import { Container, Row, Col, Media, Form, Button, Input, FormGroup, Label, FormText } from 'reactstrap';
 
 
 class Item extends React.Component {
@@ -163,34 +163,48 @@ class Item extends React.Component {
 
     showButtons(){
       if(this.props.isManipulator){
-        return(<div>
+        return(<Container>
           <h3>Crear nuevo hito en la ruta</h3>
-            <form onSubmit={this.addRouteVisit}>
-              <p><input id={"manipulator"+this.props.index} min={0} max={this.props.manipulators.length} type="number" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Número de manipulador" required/></p>
-              <p>Fecha de Entrada: <input id={"itemDateIn"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
-              <p>(Si es el último hito en la ruta, seleccione cualquier fecha) Fecha de Salida: <input id={"itemDateOut"+this.props.index} type="date" style={{width:"200"}} ref={(element) => { this.input = element }} required/></p>
-              <p>(Si es el último hito en la ruta, seleccione cualquier transporte) Tipo de transpote de salida:</p>
-                <select name="trsp" id={"trsp"+this.props.index}>
+            <Form onSubmit={this.addRouteVisit}>
+              <FormGroup>
+                <Label>Manipulador</Label>
+                <Input id={"manipulator"+this.props.index} min={0} max={this.props.manipulators.length} type="number" ref={(element) => { this.input = element }} placeholder="Número de manipulador" required/>
+                </FormGroup>
+              <FormGroup>
+                <Label>Fecha de Entrada</Label> 
+                <Input id={"itemDateIn"+this.props.index} type="date" ref={(element) => { this.input = element }} required/>
+              </FormGroup>
+              <FormGroup>
+                <Label>Fecha de Salida</Label>
+                <Input id={"itemDateOut"+this.props.index} type="date" ref={(element) => { this.input = element }} required/>
+                <FormText>Si es el último hito en la ruta, seleccione cualquier fecha</FormText>
+              </FormGroup>
+              <FormGroup>
+                <Label>Tipo de transpote de salida</Label>
+                <Input type="select" name="trsp" id={"trsp"+this.props.index}>
                   <option value={1}> Tierra </option>
                   <option value={2}> Mar </option>
                   <option value={3}> Aire </option>
-                </select>
-
-              <p>¿Es el último hito en la ruta?</p>
-                <select name="isDelivered" id={"isDelivered"+this.props.index}>
+                </Input>
+                <FormText>Si es el último hito en la ruta, seleccione cualquier transporte</FormText>
+              </FormGroup>
+              <FormGroup>
+                <Label>¿Es el último hito en la ruta?</Label>
+                <Input type="select" name="isDelivered" id={"isDelivered"+this.props.index}>
                   <option value={"false"}> No </option>
                   <option value={"true"}> Sí </option>
-                </select>
-              <input type="submit" value="Crear nuevo hito en la ruta"/> 
-            </form>
+                </Input>
+              </FormGroup>
+              <Button type="submit" outline color="primary">Crear nuevo hito en la ruta</Button> 
+            </Form>
             <hr/>
-          </div>)
+          </Container>)
       }else if(this.props.isAdmin){
 
-        return(<div>
-            <button onClick={this.deleteContract}>Eliminar Item</button>
+        return(<Container>
+            <Button outline color="danger" onClick={this.deleteContract}>Eliminar Item</Button>
             <hr/>
-          </div>)
+          </Container>)
       }else{
         return null;
       }
@@ -313,30 +327,79 @@ class Item extends React.Component {
         if (!this.props.isManipulator && !isDelivered && !this.props.isAdmin){
           return (
             <Container>
-              <h4>Lo sentimos, este producto no esta disponible en estos momentos.</h4>
+              <h4 className="subrayar pointer" onClick={this.props.click} >Lo sentimos, este producto no esta disponible en estos momentos.</h4>
             </Container>
           );
         }else{
 
+          if(itemType === "Animal"){
 
-          return (
-            <div>
+            return (
+              <Media>
+                <Media left href="#">
+                  <Media object src="img/animal.jpg" alt="Carne" onClick={this.props.click} className="pointer rounded-circle"/>
+                </Media>
+                <Media body className="marginLeft">
+                  <Media heading onClick={this.props.click} className="pointer subrayar">
+                    {"Producto número "+(this.props.index + 1)+": "+itemName}
+                  </Media>
+                  <ul>
+                  <li>Caduca el dia <Input plaintext value={String(expirationDate.getDate())} /> del mes <Input plaintext value={String(mL[expirationDate.getMonth()])}/> del año <Input plaintext value={String(expirationDate.getFullYear())}/></li>
+                </ul>
+                <Form onSubmit={this.changeStateRoute}>
+                  <Button type="submit" outline color="primary">Mostrar/Ocultar ruta</Button> 
+                </Form>
+                {this.showRoute(routeLength)}
+                {this.showButtons()}
+                </Media>                
+            </Media>
+          );
+          }else if(itemType === "Vegetal"){
 
-              <h2>{"Item número "+(this.props.index + 1)+": "+this.props.address}</h2>
-              <ul>
-                <li>Su nombre es: {itemName}</li>
-                <li>Es un item de tipo: {itemType}</li>
-                <li>Caduca el dia <input value={String(expirationDate.getDate())} style={{width:"200px"}} readOnly/> del mes <input value={mL[expirationDate.getMonth()]} style={{width:"200px"}} readOnly/> del año <input value={String(expirationDate.getFullYear())} style={{width:"200px"}} readOnly/></li>
-              </ul>
-              <form onSubmit={this.changeStateRoute}>
-                <input type="submit" value="Mostrar/Ocultar ruta"/>
-              </form>
-              {this.showRoute(routeLength)}
-              {this.showButtons()}
-              
+            return (
+              <Media>
+                <Media left href="#">
+                  <Media object src="./img/greens.jpg" alt="Cultivo" onClick={this.props.click} className="pointer rounded-circle"/>
+                </Media>
+                <Media body className="marginLeft">
+                  <Media heading onClick={this.props.click} className="pointer subrayar">
+                    {"Producto número "+(this.props.index + 1)+": "+itemName}
+                  </Media>
+                  <ul>
+                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" del mes "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} /></li>
+                </ul>
+                <Form onSubmit={this.changeStateRoute}>
+                  <Button type="submit" outline color="primary">Mostrar/Ocultar ruta</Button> 
+                </Form>
+                {this.showRoute(routeLength)}
+                {this.showButtons()}
+                </Media>                
+            </Media>
+          );
+          }else{
 
-          </div>
-        );
+            return (
+              <Media>
+                <Media left href="#">
+                  <Media object src="img/animal.jpg" alt="Carne" onClick={this.props.click} className="pointer rounded-circle"/>
+                </Media>
+                <Media body className="marginLeft">
+                  <Media heading onClick={this.props.click} className="pointer subrayar">
+                    {"Producto número "+(this.props.index + 1)+": "+itemName}
+                  </Media>
+                  <ul>
+                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" del mes "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} readOnly/></li>
+                </ul>
+                <Form onSubmit={this.changeStateRoute}>
+                  <Button type="submit" outline color="primary">Mostrar/Ocultar ruta</Button> 
+                </Form>
+                {this.showRoute(routeLength)}
+                {this.showButtons()}
+                </Media>                
+            </Media>
+          );
+          }
+          
       
     }}
 };

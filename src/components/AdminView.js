@@ -1,6 +1,7 @@
 import React from "react";
 import ItemManager from "./ItemManager";
 import ManipulatorManager from "./ManipulatorManager";
+import {Container} from "reactstrap";
 
 class AdminView extends React.Component {
 
@@ -64,7 +65,7 @@ class AdminView extends React.Component {
 
 
         return (
-          <div>
+          <Container>
 
             <h3>Se han creado {(manipulatorsLength && manipulatorsLength.value) || 0} manipuladores.</h3>
 
@@ -86,7 +87,7 @@ class AdminView extends React.Component {
               itemsLength={(itemsLength && itemsLength.value) || 0}
               manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
             />
-          </div>
+          </Container>
         );
     }
 };
