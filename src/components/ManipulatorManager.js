@@ -74,7 +74,7 @@ class ManipulatorManager extends React.Component {
     	var components = myManipulators.map((manip, index) => {
             if (((manip && manip.value) !== undefined) && manip.value !== "0x0000000000000000000000000000000000000000"){
                 
-    		  return (<ShowManipulator key={index} address={manip.value} index={index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>);
+    		  return (<ShowManipulator isAdmin={true} key={index} address={manip.value} index={index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>);
             }else return null;
     	});
 

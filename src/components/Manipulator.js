@@ -1,4 +1,5 @@
 import React from "react";
+import { Media, Button } from 'reactstrap';
 
 class Manipulator extends React.Component {
 
@@ -16,6 +17,7 @@ class Manipulator extends React.Component {
         
         this.deleteContract = this.deleteContract.bind(this);
         this.calcGeoLocation = this.calcGeoLocation.bind(this);
+        this.showButton = this.showButton.bind(this);
     } 
 
     componentDidMount() {
@@ -128,7 +130,11 @@ class Manipulator extends React.Component {
     }
 
 
-    
+    showButton(){
+      if(this.props.isAdmin){
+        return (<Button onClick={this.deleteContract} outline color="danger">Eliminar manipulador</Button>)
+      }else return null;
+    }
 
     calcGeoLocation(_int, _dec, _exp){
       const int = Number(_int);
@@ -142,6 +148,7 @@ class Manipulator extends React.Component {
       }
       
     }
+
     deleteContract(){
 
       const {drizzle, drizzleState} = this.props;
@@ -160,7 +167,8 @@ class Manipulator extends React.Component {
       let manipulatorLocationName = "Waiting";
       let manipulatorInfo = "Waiting";
       let manipulatorLocation = "Waiting";
-
+      let latitude = 0;
+      let longitude = 0;
 
       const instance = this.props.drizzleState.contracts[this.props.address];
         
@@ -177,22 +185,28 @@ class Manipulator extends React.Component {
 
           manipulatorLocation = instance.location[this.state.manipulatorLocationKey];
           manipulatorLocation = (manipulatorLocation && manipulatorLocation.value) || "??";
+          latitude = this.calcGeoLocation(manipulatorLocation.latInt,manipulatorLocation.latDec, manipulatorLocation.latExp);
+          longitude = this.calcGeoLocation(manipulatorLocation.longInt,manipulatorLocation.longDec, manipulatorLocation.longExp)
+
 
       }
 
         return (
-          <div>
-            <h2 className="subrayar" onClick={this.props.click}>{"Manipulador número "+(this.props.index + 1)+": "+manipulatorName}</h2>
-            <ul>
-              <li>Su localización es: {manipulatorLocationName}</li>
-              <li><p>Latitud: {this.calcGeoLocation(manipulatorLocation.latInt,manipulatorLocation.latDec, manipulatorLocation.latExp)}
-                  <span> Longitud: {this.calcGeoLocation(manipulatorLocation.longInt,manipulatorLocation.longDec, manipulatorLocation.longExp)}</span></p>
-              </li>
-              <li>Información: {manipulatorInfo}</li>
-            </ul>
-            <button onClick={this.deleteContract}>Eliminar Manipulador</button>
-
-          </div>
+          <Media>
+            <Media left href="#">
+              <Media object src="img/edificio.jpg" alt="Manipulador" onClick={this.props.click} className="pointer rounded-circle"/>
+            </Media>
+            <Media body className="marginLeft">
+              <Media heading onClick={this.props.click} className="pointer subrayar">
+              {"Manipulador número "+(this.props.index + 1)+": "+manipulatorName}
+              </Media>
+              <ul>
+                <li>Se sitúa en: {manipulatorLocationName}.  <a target="_blank" href={"https://www.google.com/maps/search/?api=1&query="+String(latitude)+","+String(longitude)}>Mostrar en el mapa</a></li>
+                <li>Información adicional: {manipulatorInfo}</li>
+              </ul>
+              {this.showButton()}
+            </Media>
+          </Media>
         );
     }
 };

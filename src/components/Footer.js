@@ -163,7 +163,7 @@ class Footer extends React.Component {
                             </ul>
                         </Col>
                         <Col md="7">
-                            <p className="mb-0">© 2019 Company: Las Rozas.</p>
+                            <p className="mb-0">© 2019 Jaime de Fruos Cerezo.</p>
                         </Col>
                     </Row>
                 </Container>

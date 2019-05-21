@@ -1,5 +1,6 @@
 import React from "react";
 import ShowItem from "./ShowItem";
+import { Container, Media, Form, Button, Input, FormGroup, Label, FormText } from 'reactstrap';
 
 class ItemManager extends React.Component {
 
@@ -127,22 +128,29 @@ class ItemManager extends React.Component {
         }else{
 
 
-        	return (<div>
-                {components}
-
-                <form onSubmit={this.createItem}>
-                  <h3>Crear nuevo producto</h3>
-                  <p><input id={"itemName"} type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del producto" required/></p>
-                  <p>Fecha de Caducidad: <input id={"itemExpirationDate"} type="date" style={{width:"200px"}} ref={(element) => { this.input = element }} required/></p>
-                  <p>Tipo de producto:</p>
-                    <select name="itemType" id="itemType">
-                      <option value={1}> Animal </option>
-                      <option value={2}> Vegetal </option>
-                      <option value={3}> Otro </option>
-                    </select>
-                  <input type="submit" value="Crear nuevo Item"/> 
-                </form>
-                </div>) ;
+        	return (<Container fluid className="margins">
+                    {components}
+                    <h3>Crear nuevo producto</h3>
+                    <Form onSubmit={this.createItem} className="formBox">
+                      <FormGroup>
+                        <Label>Nombre</Label>
+                        <Input type="text" id="itemName" placeholder="Nombre del producto" required/>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Fecha de caducidad</Label>
+                        <Input type="date" id="itemExpirationDate" required/>
+                      </FormGroup>
+                      <FormGroup>
+                        <Label>Tipo de producto</Label>
+                        <Input type="select" id="itemType" required>
+                          <option value={1}> Animal </option>
+                          <option value={2}> Vegetal </option>
+                          <option value={3}> Otro </option>
+                        </Input>
+                      </FormGroup>
+                      <Button type="submit">Crear nuevo producto</Button> 
+                    </Form>
+                  </Container>) ;
         	
 		}
     }

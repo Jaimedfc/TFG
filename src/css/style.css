@@ -201,4 +201,12 @@ img{
 .marginLeft{
 	margin-left: 10px;
 }
+.formBox{
+	border: 1.5px solid rgb(20, 155, 218);
+	padding: 5px;
+	border-radius: 4px;
+}
+h1{
+	font-size: 80px;
+}
 

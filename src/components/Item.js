@@ -1,6 +1,6 @@
 import React from "react";
 import ShowRoute from "./ShowRoute";
-import { Container, Row, Col, Media, Form, Button, Input, FormGroup, Label, FormText } from 'reactstrap';
+import { Container, Media, Form, Button, Input, FormGroup, Label, FormText } from 'reactstrap';
 
 
 class Item extends React.Component {
@@ -165,7 +165,7 @@ class Item extends React.Component {
       if(this.props.isManipulator){
         return(<Container>
           <h3>Crear nuevo hito en la ruta</h3>
-            <Form onSubmit={this.addRouteVisit}>
+            <Form onSubmit={this.addRouteVisit} className="formBox">
               <FormGroup>
                 <Label>Manipulador</Label>
                 <Input id={"manipulator"+this.props.index} min={0} max={this.props.manipulators.length} type="number" ref={(element) => { this.input = element }} placeholder="Número de manipulador" required/>
@@ -197,13 +197,11 @@ class Item extends React.Component {
               </FormGroup>
               <Button type="submit" outline color="primary">Crear nuevo hito en la ruta</Button> 
             </Form>
-            <hr/>
           </Container>)
       }else if(this.props.isAdmin){
 
         return(<Container>
             <Button outline color="danger" onClick={this.deleteContract}>Eliminar Item</Button>
-            <hr/>
           </Container>)
       }else{
         return null;
@@ -250,7 +248,7 @@ class Item extends React.Component {
 
     }
 
-    showRoute(routeLength){
+    showRoute(routeLength, itemType){
 
       if ( routeLength>0 && this.state.showRoute){
 
@@ -259,7 +257,8 @@ class Item extends React.Component {
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
                 manipulators={this.props.manipulators}
-                routeLength={routeLength}/>);
+                routeLength={routeLength}
+                type={itemType}/>);
       }else return null;
     }
 
@@ -344,12 +343,12 @@ class Item extends React.Component {
                     {"Producto número "+(this.props.index + 1)+": "+itemName}
                   </Media>
                   <ul>
-                  <li>Caduca el dia <Input plaintext value={String(expirationDate.getDate())} /> del mes <Input plaintext value={String(mL[expirationDate.getMonth()])}/> del año <Input plaintext value={String(expirationDate.getFullYear())}/></li>
+                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" de "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} /></li>
                 </ul>
                 <Form onSubmit={this.changeStateRoute}>
                   <Button type="submit" outline color="primary">Mostrar/Ocultar ruta</Button> 
                 </Form>
-                {this.showRoute(routeLength)}
+                {this.showRoute(routeLength, itemType)}
                 {this.showButtons()}
                 </Media>                
             </Media>
@@ -366,12 +365,12 @@ class Item extends React.Component {
                     {"Producto número "+(this.props.index + 1)+": "+itemName}
                   </Media>
                   <ul>
-                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" del mes "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} /></li>
+                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" de "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} /></li>
                 </ul>
                 <Form onSubmit={this.changeStateRoute}>
                   <Button type="submit" outline color="primary">Mostrar/Ocultar ruta</Button> 
                 </Form>
-                {this.showRoute(routeLength)}
+                {this.showRoute(routeLength, itemType)}
                 {this.showButtons()}
                 </Media>                
             </Media>
@@ -381,19 +380,19 @@ class Item extends React.Component {
             return (
               <Media>
                 <Media left href="#">
-                  <Media object src="img/animal.jpg" alt="Carne" onClick={this.props.click} className="pointer rounded-circle"/>
+                  <Media object src="img/otros.svg" alt="Otros" onClick={this.props.click} className="pointer rounded-circle"/>
                 </Media>
                 <Media body className="marginLeft">
                   <Media heading onClick={this.props.click} className="pointer subrayar">
                     {"Producto número "+(this.props.index + 1)+": "+itemName}
                   </Media>
                   <ul>
-                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" del mes "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} readOnly/></li>
+                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" de "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} readOnly/></li>
                 </ul>
                 <Form onSubmit={this.changeStateRoute}>
                   <Button type="submit" outline color="primary">Mostrar/Ocultar ruta</Button> 
                 </Form>
-                {this.showRoute(routeLength)}
+                {this.showRoute(routeLength, itemType)}
                 {this.showButtons()}
                 </Media>                
             </Media>

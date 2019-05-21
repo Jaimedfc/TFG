@@ -14,6 +14,7 @@ class ShowManipulator extends React.Component {
         super(props);
         
         this.showManip = this.showManip.bind(this);
+        this.showHR = this.showHR.bind(this);
     } 
 
 
@@ -29,34 +30,40 @@ class ShowManipulator extends React.Component {
         }
     }
 
+    showHR(){
+        if(this.props.isAdmin){
+            return (<hr/>)
+        }else return null;
+    }
+
 
 
     render() {
         if(this.state.showManip){
             return(
-                <Container className="margins">
+                <Container className="margins" fluid>
                     <Row>
                         <Col md="auto">
-                            <Manipulator click={this.showManip} key={"manip"+this.props.index} address={this.props.address} index={this.props.index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
+                            <Manipulator isAdmin={this.props.isAdmin} click={this.showManip} key={"manip"+this.props.index} address={this.props.address} index={this.props.index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
                         </Col>
                     </Row>
-                    <hr/>
+                    {this.showHR()}
                 </Container>
                 );
         }else{
 
             return (
           
-              <Container className="pointer margins" onClick={this.showManip}>
+              <Container className="pointer margins" onClick={this.showManip} fluid>
               <Row>
-                    <Col md="4" sm="12">
+                    <Col md="3" sm="12">
                         <QRCode value={this.props.address}/>
                     </Col>
-                    <Col md="8">
+                    <Col md="9">
                         <h2 className="subrayar">{"Manipulador número "+(this.props.index + 1)+". "}</h2>
                     </Col>
                 </Row>
-                <hr/>
+                {this.showHR()}
               </Container>
         );
     }

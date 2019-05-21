@@ -1,5 +1,6 @@
 import React from "react";
 import ItemManager from "./ItemManager";
+import {Container} from 'reactstrap';
 
 class ManipView extends React.Component {
 
@@ -37,7 +38,7 @@ class ManipView extends React.Component {
 
 
         return (
-          <div>
+          <Container fluid className="margins">
             <ItemManager drizzle={this.props.drizzle}
               drizzleState={this.props.drizzleState}
               isManipulator={true}
@@ -45,7 +46,7 @@ class ManipView extends React.Component {
               itemsLength={(itemsLength && itemsLength.value) || 0}
               manipLength={(manipulatorsLength && manipulatorsLength.value) || 0}
               />
-          </div>
+          </Container>
         );
     }
 };

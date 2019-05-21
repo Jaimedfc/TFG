@@ -1,5 +1,6 @@
 import React from "react";
 import Visit from "./Visit";
+import {Container} from 'reactstrap';
 
 
 class ShowRoute extends React.Component {
@@ -7,12 +8,6 @@ class ShowRoute extends React.Component {
 
   state = { visitsKey:[] };
 
-
-    constructor(props) {
-
-        super(props);
-        
-    } 
 
     componentDidMount() {
 
@@ -95,14 +90,15 @@ class ShowRoute extends React.Component {
                 drizzle={this.props.drizzle} 
                 drizzleState={this.props.drizzleState}
                 isManipulator={this.props.isManipulator}
-                visitsLength={myVisits.length}/>);
+                visitsLength={myVisits.length}
+                type={this.props.type}/>);
             }else return null;
       });
 
-      return (<div>
-        <p>Se ha seguido la siguiente ruta:</p>
+      return (<Container>
+        <h6>Se ha seguido la siguiente ruta:</h6>
         {components}
-        </div>) ;
+        </Container>) ;
       
     }
 };

@@ -1,7 +1,7 @@
 import React from "react";
 import ItemManager from "./ItemManager";
 import ManipulatorManager from "./ManipulatorManager";
-import {Container} from "reactstrap";
+import {Container, Form, FormGroup, Label, Row, Col, Button, Input} from "reactstrap";
 
 class AdminView extends React.Component {
 
@@ -65,21 +65,57 @@ class AdminView extends React.Component {
 
 
         return (
-          <Container>
+          <Container fluid>
 
-            <h3>Se han creado {(manipulatorsLength && manipulatorsLength.value) || 0} manipuladores.</h3>
+            <h3 className="margins">Se han creado {(manipulatorsLength && manipulatorsLength.value) || 0} manipuladores.</h3>
 
-            <form onSubmit={this.createManipulator.bind(this)}>
-              <p><label>Nombre: </label><input id="manipName" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre del manipulador" required/></p>
-              <p><label>Localización: </label><input id="manipNameLocation" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Nombre de la localización" required/></p>
-              <p><label>Latitud: </label><input id="manipLatitudeInt" type="text" ref={(element) => { this.input = element }} placeholder="Parte entera" required/>.<span><input id="manipLatitudeDec" placeholder="Parte decimal" type="text" ref={(element) => { this.input = element }} required/></span></p>
-              <p><label>Longitud: </label><input id="manipLongitudeInt" type="text" ref={(element) => { this.input = element }} placeholder="Parte entera" required/>.<span><input id="manipLongitudeDec" placeholder="Parte decimal" type="text" ref={(element) => { this.input = element }} required/></span></p>
-              <p><label>Información de interés: </label></p><p><textarea id="manipInfo" type="text" style={{width:"200px"}} ref={(element) => { this.input = element }} placeholder="Información del manipulador" required></textarea></p>
-              <input type="submit" value="Crear nuevo manipulador"/> 
-            </form>
+            <Form onSubmit={this.createManipulator.bind(this)} className="formBox">
+              <FormGroup>
+                <Label>Nombre </Label>
+                <Input type="text" id="manipName" placeholder="Nombre del manipulador" required/>
+              </FormGroup>
+              <FormGroup>
+                <Label>Localización </Label>
+                <Input type="text" id="manipNameLocation" placeholder="Nombre de la localización" required/>
+              </FormGroup>
+              <Row form>
+                <Col>
+                  <FormGroup>
+                    <Label>Latitud (Parte entera)</Label>
+                    <Input type="text" id="manipLatitudeInt" placeholder="Parte entera" required/>
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Label>Latitud (Parte decimal)</Label>
+                    <Input type="text" id="manipLatitudeDec" placeholder="Parte decimal" required/>
+                  </FormGroup>
+                </Col>
+              </Row>
+              <Row form>
+                <Col>
+                  <FormGroup>
+                    <Label>Longitud (Parte entera)</Label>
+                    <Input type="text" id="manipLongitudeInt" placeholder="Parte entera" required/>
+                  </FormGroup>
+                </Col>
+                <Col>
+                  <FormGroup>
+                    <Label> Longitud (Parte decimal)</Label>
+                    <Input type="text" id="manipLongitudeDec" placeholder="Parte decimal" required/>
+                  </FormGroup>
+                </Col>
+              </Row>
+              <FormGroup>
+                    <Label>Información adicional</Label>
+                    <Input type="text" id="manipInfo" placeholder="Información del manipulador" required/>
+                  </FormGroup>
+              <Button type="submit">Crear nuevo manipulador</Button> 
+            </Form>
 
-
+            <h4 className="margins">Manipuladores:</h4>
             <ManipulatorManager manipLength={(manipulatorsLength && manipulatorsLength.value) || 0} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
+            <h4 className="margins">Productos:</h4>
             <ItemManager drizzle={this.props.drizzle}
               drizzleState={this.props.drizzleState}
               isManipulator={false}
