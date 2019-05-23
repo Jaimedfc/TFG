@@ -26,7 +26,9 @@
 
 module.exports = {
   
-
+  build:{
+    BUILD_DESTINATION_DIRECTORY: "proyectBuild"
+  },
   networks: {
     
     development: {

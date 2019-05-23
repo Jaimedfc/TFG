@@ -34,11 +34,11 @@ class Visit extends React.Component {
           return(<Container>
             <ul>
               <li>
-                <p>Manipulador por:</p>
+                <p>Manipulado por:</p>
                 <ShowManipulator isAdmin={false} key={"Visita"+this.props.index} address={manipulatorAddress} index={this.props.index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
               </li>
               <li><Input plaintext value={"Animal nacido el "+dateIn.getDate()+ " de "+mL[dateIn.getMonth()]+" del año "+dateIn.getFullYear()}/></li>
-              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()}/></li>
+              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear() + " por " +_trsp}/></li>
             </ul>
             <hr/>
         </Container>);
@@ -46,11 +46,11 @@ class Visit extends React.Component {
           return(<Container>
             <ul>
               <li>
-                <p>Manipulador por:</p>
+                <p>Manipulado por:</p>
                 <ShowManipulator isAdmin={false} key={"Visita"+this.props.index} address={manipulatorAddress} index={this.props.index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
               </li>
               <li><Input plaintext value={"Vegetal plantado el "+dateIn.getDate()+ " de "+mL[dateIn.getMonth()]+" del año "+dateIn.getFullYear()}/></li>
-              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()}/></li>
+              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()+ " por " +_trsp}/></li>
             </ul>
             <hr/>
         </Container>);
@@ -58,11 +58,11 @@ class Visit extends React.Component {
           return(<Container>
             <ul>
               <li>
-                <p>Manipulador por:</p>
+                <p>Manipulado por:</p>
                 <ShowManipulator isAdmin={false} key={"Visita"+this.props.index} address={manipulatorAddress} index={this.props.index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
               </li>
               <li><Input plaintext value={"Objeto producido el "+dateIn.getDate()+ " de "+mL[dateIn.getMonth()]+" del año "+dateIn.getFullYear()}/></li>
-              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()}/></li>
+              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()+ " por " +_trsp}/></li>
             </ul>
             <hr/>
         </Container>);
@@ -71,7 +71,7 @@ class Visit extends React.Component {
       }else if(this.props.index === (this.props.visitsLength-1)){
         return(<Container>
                 <ul>
-                  <li><p>Manipulador por:</p>
+                  <li><p>Manipulado por:</p>
                   <ShowManipulator isAdmin={false} key={"Visita"+this.props.index} address={manipulatorAddress} index={this.props.index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/></li>
                   <li><Input plaintext value={"El manipulador lo recibió el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()}/></li>
                 </ul>
@@ -81,11 +81,11 @@ class Visit extends React.Component {
         return(<Container>
               <ul>
               <li>
-                <p>Manipulador por:</p>
+                <p>Manipulado por:</p>
                 <ShowManipulator isAdmin={false} key={"Visita"+this.props.index} address={manipulatorAddress} index={this.props.index} drizzle={this.props.drizzle} drizzleState={this.props.drizzleState}/>
               </li>
               <li><Input plaintext value={"El manipulador lo recibió el "+dateIn.getDate()+ " de "+mL[dateIn.getMonth()]+" del año "+dateIn.getFullYear()}/></li>
-              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()}/></li>
+              <li><Input plaintext value={"El manipulador lo transportó el "+dateOut.getDate()+ " de "+mL[dateOut.getMonth()]+" del año "+dateOut.getFullYear()+ " por " +_trsp}/></li>
             </ul>
             <hr/>
             </Container>);

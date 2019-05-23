@@ -200,8 +200,8 @@ class Item extends React.Component {
           </Container>)
       }else if(this.props.isAdmin){
 
-        return(<Container>
-            <Button outline color="danger" onClick={this.deleteContract}>Eliminar Item</Button>
+        return(<Container fluid>
+            <Button outline color="danger" onClick={this.deleteContract} className="margins">Eliminar Item</Button>
           </Container>)
       }else{
         return null;
@@ -380,7 +380,7 @@ class Item extends React.Component {
             return (
               <Media>
                 <Media left href="#">
-                  <Media object src="img/otros.svg" alt="Otros" onClick={this.props.click} className="pointer rounded-circle"/>
+                  <Media object src="img/otros.svg" alt="Otros" onClick={this.props.click} className="pointer rounded-circle greyBack"/>
                 </Media>
                 <Media body className="marginLeft">
                   <Media heading onClick={this.props.click} className="pointer subrayar">
