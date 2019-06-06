@@ -23,12 +23,11 @@
 //
 // const fs = require('fs');
 // const mnemonic = fs.readFileSync(".secret").toString().trim();
+const path = require("path");
 
 module.exports = {
   
-  build:{
-    BUILD_DESTINATION_DIRECTORY: "proyectBuild"
-  },
+  contracts_build_directory: path.join(__dirname, "./src/contracts"),
   networks: {
     
     development: {

@@ -7,7 +7,7 @@ import NavComponent from "./NavComponent";
 import Footer from "./Footer";
 import {Container} from "reactstrap";
 
-class ContractOrch extends React.Component {
+class ViewOrchest extends React.Component {
   state = { showView: "client"};
 
 
@@ -80,4 +80,4 @@ class ContractOrch extends React.Component {
   }
 }
 
-export default ContractOrch;
+export default ViewOrchest;

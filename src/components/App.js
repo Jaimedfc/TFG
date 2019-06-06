@@ -2,7 +2,7 @@ import React from 'react';
 
 import {DrizzleContext} from 'drizzle-react';
 
-import ContractOrch from "./ContractOrch";
+import ViewOrchest from "./ViewOrchest";
 
 class App extends React.Component {
 
@@ -19,7 +19,7 @@ class App extends React.Component {
 
           return (
             <div className="App">
-              <ContractOrch  drizzle={drizzle} drizzleState={drizzleState}/>
+              <ViewOrchest  drizzle={drizzle} drizzleState={drizzleState}/>
             </div>
             );
         }}
