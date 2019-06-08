@@ -67,6 +67,7 @@ NavLink{
 
 nav{
 	border-radius: 10px;
+	min-width: 500px;
 }
 body{
 	background-color: white;

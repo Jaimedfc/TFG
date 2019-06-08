@@ -129,7 +129,6 @@ class ItemManager extends React.Component {
 
 
         	return (<Container fluid className="margins">
-                    {components}
                     <h3>Crear nuevo producto</h3>
                     <Form onSubmit={this.createItem} className="formBox">
                       <FormGroup>
@@ -150,6 +149,7 @@ class ItemManager extends React.Component {
                       </FormGroup>
                       <Button type="submit">Crear nuevo producto</Button> 
                     </Form>
+                    {components}
                   </Container>) ;
         	
 		}
