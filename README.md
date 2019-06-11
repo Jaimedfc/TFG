@@ -31,7 +31,7 @@ Ahora que tenemos Ganache funcionando, podemos migrar o desplegar los contratos 
 
 		truffle migrate --reset
 	
-La opción  ´--reset´ no es necesaria la primera vez que migramos los contratos, pero las siguientes veces será necesario.
+La opción  `--reset` no es necesaria la primera vez que migramos los contratos, pero las siguientes veces será necesario.
 
 Ya podemos ejecutar nuestra aplicación, podemos hacerlo con:
 
