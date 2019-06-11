@@ -22,16 +22,16 @@ Con la ayuda de npm, instalamos todas las dependencias que necesitaremos (se enc
 	
 Una vez instaladas todas las dependencias, pasamos a usar el framework de Truffle compilando los contratos que usaremos:
 
-		truffle compile –all
+		truffle compile --all
 	
 Este comando crea una nueva carpeta dentro de src con los contratos ya compilados dentro.
 Durante los siguientes pasos, necesitaremos tener en funcionamiento nuestra red privada personal de Blockchain Ganache. Simplemente abriendo la interfaz gráfica y haciendo click en “Quickstart”. Debemos asegurarnos de que la dirección de despliegue de la red es 127.0.0.1 y puerto 7545 en los ajustes de Ganache (Si se usasen otras direcciones o puertos, conviene modificar el archivo truffle-config.js).
 
 Ahora que tenemos Ganache funcionando, podemos migrar o desplegar los contratos en nuestra red con el siguiente comando:
 
-		truffle migrate –-reset
+		truffle migrate --reset
 	
-La opción ´´´ --reset ´´´ no es necesaria la primera vez que migramos los contratos, pero las siguientes veces será necesario.
+La opción ´´´ --reset ``` no es necesaria la primera vez que migramos los contratos, pero las siguientes veces será necesario.
 
 Ya podemos ejecutar nuestra aplicación, podemos hacerlo con:
 
