@@ -7,7 +7,10 @@ contract Item {
 	enum itemType { Animal, Greens, Other}
 	enum trspType { Land, Sea, Air}
 
-	struct Visit {
+	//Una visita se corresponde con un hito en la ruta
+	//En la primera Visit, dateIn en la fecha de nacimiento/plantación
+	//En la ultima Visit, dateOut y trspOut son ignorados
+	struct Visit {                
 
 		Manipulator manipulator;
 		uint dateIn;              //timestamp

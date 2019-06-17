@@ -3,7 +3,8 @@ pragma solidity ^0.5.0;
 
 contract Manipulator {
 
-	struct Location { // latitude = integer + (decimal*10^(-exp))
+	// latitude = integer + (decimal*10^(-exp))
+	struct Location {
 		int latInt;  //integer
 		uint latDec; //decimal
 		uint latExp; //exponential

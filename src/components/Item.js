@@ -30,8 +30,6 @@ class Item extends React.Component {
 
     componentDidMount() {
 
-        console.log("==== COMPONENTE ITEM MONTADO ============", this.props.address );
-
         const { drizzle } = this.props;
         const instance = drizzle.contracts[this.props.address];
         const json = require('../contracts/Item.json');
@@ -52,35 +50,30 @@ class Item extends React.Component {
         let { itemNameKey, itemTypeKey, itemRouteLengthKey, itemExpirationDateKey, itemIsDeliveredKey } = this.state;
 
         if (!this.state.itemNameKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemNameKey = instance.methods["name"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemTypeKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemTypeKey = instance.methods["itType"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemRouteLengthKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemRouteLengthKey = instance.methods["routeLength"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemExpirationDateKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemExpirationDateKey = instance.methods["expirationDate"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemIsDeliveredKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemIsDeliveredKey = instance.methods["isDelivered"].cacheCall();
             
             changed = true;
@@ -88,7 +81,6 @@ class Item extends React.Component {
 
 
         if (changed) {
-            // Actualizar el estado local
             this.setState({ itemNameKey, itemTypeKey, itemExpirationDateKey, itemRouteLengthKey, itemIsDeliveredKey });
         }
     }
@@ -107,35 +99,30 @@ class Item extends React.Component {
         let { itemNameKey, itemTypeKey, itemRouteLengthKey, itemExpirationDateKey, itemIsDeliveredKey } = this.state;
 
         if (!this.state.itemNameKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemNameKey = instance.methods["name"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemTypeKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemTypeKey = instance.methods["itType"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemRouteLengthKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemRouteLengthKey = instance.methods["routeLength"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemExpirationDateKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemExpirationDateKey = instance.methods["expirationDate"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.itemIsDeliveredKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             itemIsDeliveredKey = instance.methods["isDelivered"].cacheCall();
             
             changed = true;
@@ -143,7 +130,6 @@ class Item extends React.Component {
 
 
         if (changed) {
-            // Actualizar el estado local
             this.setState({ itemNameKey, itemTypeKey, itemExpirationDateKey, itemRouteLengthKey, itemIsDeliveredKey });
         }
     }
@@ -283,7 +269,6 @@ class Item extends React.Component {
       let routeLength = "Waiting";
       let expirationDate = new Date();
       let isDelivered = "Waiting";
-      let showRouteState = this.state.showRoute;
       const mL = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
 
@@ -343,7 +328,7 @@ class Item extends React.Component {
                     {"Producto número "+(this.props.index + 1)+": "+itemName}
                   </Media>
                   <ul>
-                  <li><Input plaintext value={"Caduca el dia "+String(expirationDate.getDate())+" de "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} /></li>
+                  <li><Input plaintext readOnly value={"Caduca el dia "+String(expirationDate.getDate())+" de "+String(mL[expirationDate.getMonth()])+" del año "+String(expirationDate.getFullYear())} /></li>
                 </ul>
                 <Form onSubmit={this.changeStateRoute}>
                   <Button type="submit" outline color="primary">Mostrar/Ocultar ruta</Button> 

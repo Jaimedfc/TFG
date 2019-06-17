@@ -38,7 +38,6 @@ class ShowRoute extends React.Component {
 
     componentDidUpdate(prevProps, prevState, snapshoot) {
 
-        const l1 = prevProps.routeLength || 0;
         const l2 = +this.props.routeLength;
 
         const { drizzle } = this.props;

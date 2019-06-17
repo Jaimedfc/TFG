@@ -6,7 +6,7 @@ import { Container, Row, Col } from 'reactstrap';
 class ShowManipulator extends React.Component {
 
 
-  state = { showManip:false };
+  state = { showManip: false };
 
 
     constructor(props) {

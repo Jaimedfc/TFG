@@ -12,7 +12,6 @@ class ShowItem extends React.Component {
     constructor(props) {
 
         super(props);
-        
         this.showItem = this.showItem.bind(this);
     } 
 

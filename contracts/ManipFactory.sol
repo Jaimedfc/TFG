@@ -14,6 +14,9 @@ contract ManipFactory {
   	Manipulator newManip = new Manipulator(name, locationName, latitudeInt, latitudeDec, latitudeExp, longitudeInt, longitudeDec, longitudeExp, info);
   	bool pushed=false;
 
+	//Si hay un Manipulator con address 0x0, lo sobreescribimos
+	//Si no hay, se pushea al final del array
+
   	for (uint i = 0; i < manipulators.length; i++){
 
   		if(manipulators[i] == Manipulator(address(0))){
@@ -40,18 +43,20 @@ contract ManipFactory {
 
   //*********CONTRACTDESTRUCTION****************
 
-  function destroyManipulator(address _manipulator) public{
+	//El Manipulator a destruir pasa a ser un Manipulator con address 0x0 en el array
 
-  	Manipulator manipulatorToDestroy = Manipulator(_manipulator);
+  	function destroyManipulator(address _manipulator) public{
+
+  		Manipulator manipulatorToDestroy = Manipulator(_manipulator);
   	
-  	for (uint i = 0; i < manipulators.length; i++){
+  		for (uint i = 0; i < manipulators.length; i++){
 
-  		if(manipulators[i] == manipulatorToDestroy){
-  			manipulators[i] = Manipulator(address(0));
+  			if(manipulators[i] == manipulatorToDestroy){
+  				manipulators[i] = Manipulator(address(0));
+  			}
   		}
-  	}
 
   	manipulatorToDestroy.destroyContract();
-  }
+  	}
 
 }

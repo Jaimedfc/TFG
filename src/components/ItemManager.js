@@ -1,6 +1,6 @@
 import React from "react";
 import ShowItem from "./ShowItem";
-import { Container, Media, Form, Button, Input, FormGroup, Label, FormText } from 'reactstrap';
+import { Container, Form, Button, Input, FormGroup, Label } from 'reactstrap';
 
 class ItemManager extends React.Component {
 
@@ -19,12 +19,12 @@ class ItemManager extends React.Component {
         this.parseDate = this.parseDate.bind(this);
     } 
 
-	componentDidUpdate(prevProps, prevState, snapshot) {
+	  componentDidUpdate(prevProps, prevState, snapshot) {
 		
-        const l1 = prevProps.manipLength || 0;
+        
         const l2 = +this.props.manipLength;
 
-        const l3 = prevProps.itemsLength || 0;
+        
         const l4 = +this.props.itemsLength;
 
         const { drizzle } = this.props;
@@ -53,7 +53,7 @@ class ItemManager extends React.Component {
             changed && this.setState({ manipulatorsKey, itemsKey });
     	
     
-	}
+	  }
 
     parseDate(input) {
       var parts = input.match(/(\d+)/g);
@@ -78,19 +78,23 @@ class ItemManager extends React.Component {
         gasPrice: 100000000000
     });
 
-  
-    // save the `createConId` for later reference
     this.setState({ createItemId});
      
    };
+
+  componentWillUnmount(){
+    
+    const manipulatorsKey = [];
+    const itemsKey = [];
+    this.setState({manipulatorsKey, itemsKey});
+  }
 
     
 
 
 	render() {
-    	// get the contract state from drizzleState
-    	const { ManipFactory, ItemFactory } = this.props.drizzleState.contracts;
-    	// using the saved `dataKey`, get the variable we're interested in
+      const { ManipFactory, ItemFactory } = this.props.drizzleState.contracts;
+      
     	var myManipulators = [];
         var myItems = [];
     	for (let i = 0; i < this.props.manipLength; i++) {

@@ -22,7 +22,6 @@ class Manipulator extends React.Component {
 
     componentDidMount() {
 
-        console.log("==== COMPONENTE Manipulator MONTADO ============", this.props.address );
 
         const { drizzle } = this.props;
         const instance = drizzle.contracts[this.props.address];
@@ -47,28 +46,24 @@ class Manipulator extends React.Component {
         let { manipulatorNameKey, manipulatorLocationNameKey, manipulatorInfoKey, manipulatorLocationKey } = this.state;
 
         if (!this.state.manipulatorNameKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorNameKey = instance.methods["name"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.manipulatorLocationNameKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorLocationNameKey = instance.methods["locationName"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.manipulatorInfoKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorInfoKey = instance.methods["info"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.manipulatorLocationKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorLocationKey = instance.methods["location"].cacheCall();
             
             changed = true;
@@ -76,7 +71,6 @@ class Manipulator extends React.Component {
 
 
         if (changed) {
-            // Actualizar el estado local
             this.setState({ manipulatorNameKey, manipulatorLocationNameKey, manipulatorLocationKey, manipulatorInfoKey });
         }
     }
@@ -95,28 +89,24 @@ class Manipulator extends React.Component {
         let { manipulatorNameKey, manipulatorLocationNameKey, manipulatorInfoKey, manipulatorLocationKey } = this.state;
 
         if (!this.state.manipulatorNameKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorNameKey = instance.methods["name"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.manipulatorLocationNameKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorLocationNameKey = instance.methods["locationName"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.manipulatorInfoKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorInfoKey = instance.methods["info"].cacheCall();
             
             changed = true;
         }
 
         if (!this.state.manipulatorLocationKey) {
-            // Decirle a drizzle que queremos observar el metodo getState().
             manipulatorLocationKey = instance.methods["location"].cacheCall();
             
             changed = true;
@@ -124,7 +114,6 @@ class Manipulator extends React.Component {
 
 
         if (changed) {
-            // Actualizar el estado local
             this.setState({ manipulatorNameKey, manipulatorLocationNameKey, manipulatorLocationKey, manipulatorInfoKey });
         }
     }
@@ -201,7 +190,7 @@ class Manipulator extends React.Component {
               {"Manipulador número "+(this.props.index + 1)+": "+manipulatorName}
               </Media>
               <ul>
-                <li>Se sitúa en: {manipulatorLocationName}.  <a target="_blank" href={"https://www.google.com/maps/search/?api=1&query="+String(latitude)+","+String(longitude)}>Mostrar en el mapa</a></li>
+                <li>Se sitúa en: {manipulatorLocationName}.  <a target="_blank" rel="noopener noreferrer" href={"https://www.google.com/maps/search/?api=1&query="+String(latitude)+","+String(longitude)}>Mostrar en el mapa</a></li>
                 <li>Información adicional: {manipulatorInfo}</li>
               </ul>
               {this.showButton()}

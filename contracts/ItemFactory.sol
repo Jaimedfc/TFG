@@ -14,7 +14,8 @@ contract ItemFactory {
   	Item newItem = new Item(_name, _itemType, _expirationDate);
   	
   	bool pushed=false;
-
+	//Si hay un Item con address 0x0, lo sobreescribimos
+	//Si no hay, se pushea al final del array
   	for (uint i = 0; i < items.length; i++){
 
   		if(items[i] == Item(address(0))){
@@ -37,12 +38,13 @@ contract ItemFactory {
   	return items.length;
   }
 
-  //****************ENDGETTERS***************
+  
   
 
 
   //*********CONTRACTDESTRUCTION****************
 
+  //El Item a destruir pasa a ser un Item con address 0x0 en el array
   function destroyItem(address _item) public{
 
   	Item itemToDestroy = Item(_item);

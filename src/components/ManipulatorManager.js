@@ -30,7 +30,6 @@ class ManipulatorManager extends React.Component {
 
 	componentDidUpdate(prevProps, prevState, snapshot) {
 		
-        const l1 = prevProps.manipLength || 0;
         const l2 = +this.props.manipLength;
         const { drizzle } = this.props;
         const contract = drizzle.contracts.ManipFactory;
@@ -59,9 +58,7 @@ class ManipulatorManager extends React.Component {
 
 
 	render() {
-    	// get the contract state from drizzleState
     	const { ManipFactory } = this.props.drizzleState.contracts;
-    	// using the saved `dataKey`, get the variable we're interested in
     	var myManipulators = [];
     	for (let i = 0; i < this.props.manipLength; i++) {
             if (this.state.manipulatorsKey) {

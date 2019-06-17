@@ -30,7 +30,7 @@ class NavComponent extends React.Component {
         return (
           <div>
             <Navbar color="light" light expand="md">
-              <NavbarBrand href="/"><img src="img/AdminLogo.png" alt="Admin View"/></NavbarBrand>
+              <NavbarBrand href="#"><img src="img/AdminLogo.png" alt="Admin View"/></NavbarBrand>
               <Container fluid className="text-center justify-content-md-center"><h1 className="">Sección para Administradores</h1></Container>
               <NavbarToggler onClick={this.toggle} />
               <Collapse isOpen={this.state.isOpen} navbar>
@@ -53,7 +53,7 @@ class NavComponent extends React.Component {
         return (
             <div>
               <Navbar color="light" light expand="md">
-                <NavbarBrand href="/"><img src="img/ManipLogo.png" alt="Manipulator View"/></NavbarBrand>
+                <NavbarBrand href="#"><img src="img/ManipLogo.png" alt="Manipulator View"/></NavbarBrand>
                 <Container fluid className="text-center justify-content-md-center"><h1 className="">Sección para Manipuladores</h1></Container>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
@@ -76,7 +76,7 @@ class NavComponent extends React.Component {
         return (
             <div>
               <Navbar color="light" light expand="md">
-                <NavbarBrand href="/"><img src="img/ClientLogo.png" alt="Client View"/></NavbarBrand>
+                <NavbarBrand href="#"><img src="img/ClientLogo.png" alt="Client View"/></NavbarBrand>
                 <Container fluid className="text-center justify-content-md-center"><h1 className="mb-0">Sección para Clientes</h1></Container>
                 <NavbarToggler onClick={this.toggle} />
                 <Collapse isOpen={this.state.isOpen} navbar>
