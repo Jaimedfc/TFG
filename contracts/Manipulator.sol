@@ -3,14 +3,12 @@ pragma solidity ^0.5.0;
 
 contract Manipulator {
 
-	// latitude = integer + (decimal*10^(-exp))
+	// latitude = Num * 10 ^ (-Exp)
 	struct Location {
-		int latInt;  //integer
-		uint latDec; //decimal
-		uint latExp; //exponential
-		int longInt; //integer
-		uint longDec;//decimal
-		uint longExp;//exponential
+		int latNum;  
+		uint latExp; 
+		int longNum; 
+		uint longExp;
 	}
 
 
@@ -20,15 +18,13 @@ contract Manipulator {
 	string public info;
 	address payable owner;
 	
-  constructor(string memory _name,string memory _locationName, int _latitudeInt, uint _latitudeDec, uint _latitudeExp, int _longitudeInt, uint _longitudeDec, uint _longitudeExp, string memory _info) public {
+  constructor(string memory _name,string memory _locationName, int _latitudeNum, uint _latitudeExp, int _longitudeNum, uint _longitudeExp, string memory _info) public {
 
   	name = _name;
   	locationName = _locationName;
-  	location.latInt = _latitudeInt;
-  	location.latDec = _latitudeDec;
+  	location.latNum = _latitudeNum;
   	location.latExp = _latitudeExp;
-  	location.longInt = _longitudeInt;
-  	location.longDec = _longitudeDec;
+  	location.longNum = _longitudeNum;
   	location.longExp = _longitudeExp;
   	info = _info;
   	owner = msg.sender;

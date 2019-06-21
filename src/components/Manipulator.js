@@ -125,16 +125,11 @@ class Manipulator extends React.Component {
       }else return null;
     }
 
-    calcGeoLocation(_int, _dec, _exp){
-      const int = Number(_int);
-      const dec = Number(_dec);
+    calcGeoLocation(_num, _exp){
+      const num = Number(_num);
       const exp = Number(_exp);
-
-      if(int < 0){
-        return int - dec*Math.pow(10, -1*exp);
-      }else{
-        return int + dec*Math.pow(10, -1*exp);
-      }
+      return num*Math.pow(10, -1*exp);
+      
       
     }
 
@@ -174,8 +169,8 @@ class Manipulator extends React.Component {
 
           manipulatorLocation = instance.location[this.state.manipulatorLocationKey];
           manipulatorLocation = (manipulatorLocation && manipulatorLocation.value) || "??";
-          latitude = this.calcGeoLocation(manipulatorLocation.latInt,manipulatorLocation.latDec, manipulatorLocation.latExp);
-          longitude = this.calcGeoLocation(manipulatorLocation.longInt,manipulatorLocation.longDec, manipulatorLocation.longExp)
+          latitude = this.calcGeoLocation(manipulatorLocation.latNum, manipulatorLocation.latExp);
+          longitude = this.calcGeoLocation(manipulatorLocation.longNum, manipulatorLocation.longExp)
 
 
       }

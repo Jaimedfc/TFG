@@ -35,15 +35,37 @@ class AdminView extends React.Component {
     const contract = drizzle.contracts.ManipFactory;
     const manipName = String(document.getElementById("manipName").value);
     const manipNameLocation = String(document.getElementById("manipNameLocation").value);
-    const manipLatitudeInt = Number(document.getElementById("manipLatitudeInt").value.trim());
-    const manipLongitudeInt = Number(document.getElementById("manipLongitudeInt").value.trim());
-    const manipLatitudeDec = Number(document.getElementById("manipLatitudeDec").value.trim());
-    const manipLongitudeDec = Number(document.getElementById("manipLongitudeDec").value.trim());
-    const manipLatitudeExp = document.getElementById("manipLatitudeDec").value.trim().length;
-    const manipLongitudeExp = document.getElementById("manipLongitudeDec").value.trim().length;
+    const latitude = document.getElementById("manipLatitude").value.trim();
+    const longitude = document.getElementById("manipLongitude").value.trim();
+    let manipLatitude;
+    let manipLongitude;
+    let manipLatitudeExp;
+    let manipLongitudeExp;
+    if(latitude.includes(".")){
+      manipLatitudeExp = latitude.split(".",2)[1].length;
+      manipLatitude = Number(latitude.split(".",2)[0].trim() + latitude.split(".",2)[1].trim());
+    }else if (latitude.includes(",")) {
+      manipLatitudeExp = latitude.split(",",2)[1].length;
+      manipLatitude = Number(latitude.split(",",2)[0].trim() + latitude.split(",",2)[1].trim());
+    } else {
+      manipLatitude = Number(latitude);
+      manipLatitudeExp = 0;
+    }
+
+    if(longitude.includes(".")){
+      manipLongitudeExp = longitude.split(".",2)[1].length;
+      manipLongitude = Number(longitude.split(".",2)[0].trim() + longitude.split(".",2)[1].trim());
+    }else if (longitude.includes(",")) {
+      manipLongitudeExp = longitude.split(",",2)[1].length;
+      manipLongitude = Number(longitude.split(",",2)[0].trim() + longitude.split(",",2)[1].trim());
+    } else {
+      manipLongitude = Number(longitude);
+      manipLongitudeExp = 0;
+    }
+    
     const manipInfo = String(document.getElementById("manipInfo").value);
 
-    const createManipulatorId = contract.methods["createManipulator"].cacheSend(manipName, manipNameLocation, manipLatitudeInt, manipLatitudeDec, manipLatitudeExp, manipLongitudeInt, manipLongitudeDec, manipLongitudeExp, manipInfo, {
+    const createManipulatorId = contract.methods["createManipulator"].cacheSend(manipName, manipNameLocation, manipLatitude, manipLatitudeExp, manipLongitude, manipLongitudeExp, manipInfo, {
       from: drizzleState.accounts[0], gas: 4712388,
       gasPrice: 100000000000
     });
@@ -78,34 +100,14 @@ class AdminView extends React.Component {
             <Label>Localización </Label>
             <Input type="text" id="manipNameLocation" placeholder="Nombre de la localización" required />
           </FormGroup>
-          <Row form>
-            <Col>
-              <FormGroup>
-                <Label>Latitud (Parte entera)</Label>
-                <Input type="text" id="manipLatitudeInt" placeholder="Parte entera" required />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label>Latitud (Parte decimal)</Label>
-                <Input type="text" id="manipLatitudeDec" placeholder="Parte decimal" required />
-              </FormGroup>
-            </Col>
-          </Row>
-          <Row form>
-            <Col>
-              <FormGroup>
-                <Label>Longitud (Parte entera)</Label>
-                <Input type="text" id="manipLongitudeInt" placeholder="Parte entera" required />
-              </FormGroup>
-            </Col>
-            <Col>
-              <FormGroup>
-                <Label> Longitud (Parte decimal)</Label>
-                <Input type="text" id="manipLongitudeDec" placeholder="Parte decimal" required />
-              </FormGroup>
-            </Col>
-          </Row>
+          <FormGroup>
+            <Label>Latitud</Label>
+            <Input type="text" id="manipLatitude" placeholder="Latitud" required />
+          </FormGroup>
+          <FormGroup>
+            <Label>Longitud</Label>
+            <Input type="text" id="manipLongitude" placeholder="Longitud" required />
+          </FormGroup>
           <FormGroup>
             <Label>Información adicional</Label>
             <Input type="text" id="manipInfo" placeholder="Información del manipulador" required />

@@ -9,9 +9,9 @@ contract ManipFactory {
 
   //********************CONSTRUCTOR************
 
-  function createManipulator(string memory name, string memory locationName, int latitudeInt, uint latitudeDec, uint latitudeExp, int longitudeInt, uint longitudeDec, uint longitudeExp, string memory info) public{
+  function createManipulator(string memory name, string memory locationName, int latitudeNum, uint latitudeExp, int longitudeNum, uint longitudeExp, string memory info) public{
 
-  	Manipulator newManip = new Manipulator(name, locationName, latitudeInt, latitudeDec, latitudeExp, longitudeInt, longitudeDec, longitudeExp, info);
+  	Manipulator newManip = new Manipulator(name, locationName, latitudeNum, latitudeExp, longitudeNum, longitudeExp, info);
   	bool pushed=false;
 
 	//Si hay un Manipulator con address 0x0, lo sobreescribimos
